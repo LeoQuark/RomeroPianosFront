@@ -16,25 +16,26 @@ const dashboardRoutes = [
   },
   {
     path: "/user",
-    name: "User Profile",
-    icon: "nc-icon nc-circle-09",
+    name: "Inventario",
+    icon: "nc-icon nc-app",
     component: UserProfile,
     layout: "/admin",
   },
   {
     path: "/table",
-    name: "Table List",
+    name: "Registro de ventas",
     icon: "nc-icon nc-notes",
     component: TableList,
     layout: "/admin",
   },
   {
     path: "/typography",
-    name: "Typography",
+    name: "Cálculo de costos",
     icon: "nc-icon nc-paper-2",
     component: Typography,
     layout: "/admin",
   },
+  /*
   {
     path: "/icons",
     name: "Icons",
@@ -44,18 +45,20 @@ const dashboardRoutes = [
   },
   {
     path: "/maps",
-    name: "Maps",
+    name: "Mapa",
     icon: "nc-icon nc-pin-3",
     component: Maps,
     layout: "/admin",
   },
+
   {
     path: "/notifications",
-    name: "Notifications",
+    name: "Notificaciones",
     icon: "nc-icon nc-bell-55",
     component: Notifications,
     layout: "/admin",
   },
+  */
 ];
 
 export default dashboardRoutes;

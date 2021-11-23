@@ -12,18 +12,12 @@ function Sidebar({ color, image, routes }) {
   };
   return (
     <div className="sidebar" data-image={image} data-color={color}>
-      <div
-        className="sidebar-background"
-        style={{
-          backgroundImage: "url(" + image + ")",
-        }}
-      />
       <div className="sidebar-wrapper">
         <div className="logo d-flex align-items-center justify-content-start">
           <a href="" className="simple-text logo-mini mx-1">
             <div className="logo-img">
               <img
-                src={require("assets/img/reactlogo.png").default}
+                src={require("assets/img/RomeroPianos.png").default}
                 alt="..."
               />
             </div>
