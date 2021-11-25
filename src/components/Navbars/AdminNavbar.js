@@ -69,7 +69,7 @@ function Header() {
                 onClick={(e) => e.preventDefault()}
               >
                 <i className="nc-icon nc-zoom-split"></i>
-                <span className="d-lg-block">Buscar</span>
+                <span className="d-lg-block pl-2">Buscar</span>
               </Nav.Link>
             </Nav.Item>
           </Nav>
@@ -89,7 +89,7 @@ function Header() {
                 href="#pablo"
                 onClick={(e) => e.preventDefault()}
               >
-                <span className="no-icon">Desconectar</span>
+                <span className="no-icon">Cerrar sesión</span>
               </Nav.Link>
             </Nav.Item>
           </Nav>

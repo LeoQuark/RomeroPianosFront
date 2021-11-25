@@ -2,6 +2,7 @@ import Dashboard from "views/Dashboard.js";
 import UserProfile from "views/UserProfile.js";
 import TableList from "views/TableList.js";
 import Typography from "views/Typography.js";
+import Inventario from "views/Inventario.jsx";
 import Icons from "views/Icons.js";
 import Maps from "views/Maps.js";
 import Notifications from "views/Notifications.js";
@@ -15,10 +16,10 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/user",
+    path: "/inventario",
     name: "Inventario",
     icon: "nc-icon nc-app",
-    component: UserProfile,
+    component: Inventario,
     layout: "/admin",
   },
   {

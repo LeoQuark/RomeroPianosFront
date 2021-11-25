@@ -5,25 +5,25 @@ import { Nav } from "react-bootstrap";
 
 import logo from "assets/img/reactlogo.png";
 
-function Sidebar({ color, image, routes }) {
+function Sidebar({ routes }) {
   const location = useLocation();
   const activeRoute = (routeName) => {
     return location.pathname.indexOf(routeName) > -1 ? "active" : "";
   };
   return (
-    <div className="sidebar" data-image={image} data-color={color}>
+    <div className="sidebar" data-color={"black"}>
       <div className="sidebar-wrapper">
-        <div className="logo d-flex align-items-center justify-content-start">
-          <a href="" className="simple-text logo-mini mx-1">
-            <div className="logo-img">
+        <div className="logo d-flex align-items-center justify-content-center">
+          {/* <a href="" className="simple-text logo-mini mx-1">
+             <div className="logo-img">
               <img
                 src={require("assets/img/RomeroPianos.png").default}
                 alt="..."
               />
-            </div>
-          </a>
-          <a className="simple-text" href="">
-            Romero Pianos
+            </div> 
+          </a> */}
+          <a className="simple-text">
+            Romero <span style={{ color: "#b38c4b" }}>Pianos</span>
           </a>
         </div>
         <Nav>
