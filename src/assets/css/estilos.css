@@ -1,3 +1,10 @@
+:root {
+  --blackRP: #1d1c1c;
+  --yellowRP: #b38c4b;
+  --grisRP: #8c8c8c;
+  --blancoRP: #d6d5d6;
+}
+
 /* estilos para el tamaño del texto */
 .text-xs {
   font-size: 0.75rem;
@@ -12,4 +19,18 @@
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
+}
+
+.btn-outline-gray {
+  border: 2px solid #888888;
+  color: #888888;
+  background: white;
+  border-radius: 0.2rem;
+  padding: 4px 12px;
+  font-size: 12px;
+}
+
+.btn-outline-gray:hover {
+  background: #888888;
+  color: white;
 }

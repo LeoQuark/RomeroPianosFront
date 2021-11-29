@@ -11,32 +11,31 @@ const dashboardRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    icon: "nc-icon nc-chart-pie-35",
+    icon: "fas fa-chart-pie",
     component: Dashboard,
     layout: "/admin",
   },
   {
     path: "/inventario",
     name: "Inventario",
-    icon: "nc-icon nc-app",
+    icon: "fas fa-box-open",
     component: Inventario,
     layout: "/admin",
   },
   {
     path: "/table",
     name: "Registro de ventas",
-    icon: "nc-icon nc-notes",
+    icon: "fas fa-clipboard-list",
     component: TableList,
     layout: "/admin",
   },
   {
     path: "/typography",
     name: "Cálculo de costos",
-    icon: "nc-icon nc-paper-2",
+    icon: "fas fa-calculator",
     component: Typography,
     layout: "/admin",
   },
-  /*
   {
     path: "/icons",
     name: "Icons",
@@ -44,6 +43,7 @@ const dashboardRoutes = [
     component: Icons,
     layout: "/admin",
   },
+  /*
   {
     path: "/maps",
     name: "Mapa",

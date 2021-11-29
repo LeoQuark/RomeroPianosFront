@@ -28,12 +28,16 @@
 }
 
 // Apply the mixin to the buttons
-//.btn-default { @include btn-styles($default-color, $default-states-color); }
-.btn-primary { @include btn-styles($primary-color, $primary-states-color); }
-.btn-success { @include btn-styles($success-color, $success-states-color); }
-.btn-info    { @include btn-styles($info-color, $info-states-color); }
+//.btn-default { @include btn-styles($default-color (letra), $default-states-color (fondo)); }
+.btn-primary { @include btn-styles($white-color, $primary-states-color); }
+.btn-success { @include btn-styles($white-color, $success-states-color); }
+.btn-info    { @include btn-styles($white-color, $info-states-color); }
+.btn-secondary    { @include btn-styles($white-color, $black-hr); }
 .btn-warning { @include btn-styles($warning-color, $warning-states-color); }
-.btn-danger  { @include btn-styles($danger-color, $danger-states-color); }
+.btn-yellow { @include btn-styles($white-color, $yellow-rp); }
+.btn-danger  { @include btn-styles($white-color, $danger-states-color); }
+.btn-dark  { @include btn-styles($white-color, $default-states-color); }
+.btn-outline-secondary { @include btn-styles($black-hr, $white-color); }
 .btn-neutral {
     @include btn-styles($white-color, $white-color);
 
