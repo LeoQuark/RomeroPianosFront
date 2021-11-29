@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Table } from "react-bootstrap";
 
 import AgregarPiano from "../Modals/Pianos/AgregarPiano.jsx";
 import EditarPiano from "../Modals/Pianos/EditarPiano.jsx";
 import EliminarProducto from "../Modals/EliminarProducto.jsx";
 import InfoProducto from "../Modals/InfoProducto.jsx";
+import Cargando from "../Cargando.jsx";
 
-function TablaPianos({ pianos }) {
+function TablaPianos({ pianos, cargando }) {
+  // const [cargando, setCargando] = useState(<Cargando />);
   useEffect(() => {}, []);
 
   return (
@@ -16,12 +18,12 @@ function TablaPianos({ pianos }) {
           <div className="col-12 col-sm-8 col-lg-6">
             <Card.Title as="h4">Inventario de Pianos</Card.Title>
             <p className="card-category">
-              Aquí puedes acceder a la información, editar y eliminar cada
-              producto
+              Aquí puedes agregar un nuevo producto, ver la información, editar
+              y eliminar tus productos de tu inventario.
             </p>
           </div>
           <div className="col-12 col-sm-3 col-lg-2">
-            <AgregarPiano pianos={pianos} />
+            <AgregarPiano />
           </div>
         </div>
       </Card.Header>
@@ -66,7 +68,7 @@ function TablaPianos({ pianos }) {
                 </tr>
               ))
             ) : (
-              <div>no hay productos</div>
+              <div>{cargando ? <Cargando /> : "No hay productos"}</div>
             )}
           </tbody>
         </Table>

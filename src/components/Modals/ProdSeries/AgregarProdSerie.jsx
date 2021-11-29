@@ -2,34 +2,37 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import API_URL from "../../../utils/api-data.js";
 
-function AgregarPiano() {
+function AgregarProdSerie() {
   const [show, setShow] = useState(false);
-  const [datosPiano, setDatosPiano] = useState({});
+  const [datosProdSerie, setDatosProdSerie] = useState({});
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleInput = (event) => {
     event.preventDefault();
-    setDatosPiano({ ...datosPiano, [event.target.name]: event.target.value });
-    console.log(datosPiano);
+    setDatosProdSerie({
+      ...datosProdSerie,
+      [event.target.name]: event.target.value,
+    });
+    console.log(datosProdSerie);
   };
 
   function agregarDB() {
     console.log("agregar a base de datos");
-    console.log(datosPiano);
+    console.log(datosProdSerie);
   }
 
   return (
     <>
-      <button className="btn btn-yellow text-sm" onClick={handleShow}>
-        Agregar piano
+      <button className="btn btn-yellow text-xs" onClick={handleShow}>
+        Agregar Producto en Serie
       </button>
 
       <Modal show={show} onHide={handleClose}>
         <form action="" onSubmit={agregarDB}>
           <Modal.Header closeButton className="py-0">
-            <Modal.Title>Agrega un piano</Modal.Title>
+            <Modal.Title>Agrega un producto en serie</Modal.Title>
           </Modal.Header>
           <Modal.Body className="py-0">
             <div>
@@ -102,4 +105,4 @@ function AgregarPiano() {
   );
 }
 
-export default AgregarPiano;
+export default AgregarProdSerie;

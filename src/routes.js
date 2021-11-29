@@ -1,8 +1,11 @@
 import Dashboard from "views/Dashboard.js";
+import RegistroVentas from "views/RegistroVentas.jsx";
+import Inventario from "views/Inventario.jsx";
+
 import UserProfile from "views/UserProfile.js";
 import TableList from "views/TableList.js";
 import Typography from "views/Typography.js";
-import Inventario from "views/Inventario.jsx";
+
 import Icons from "views/Icons.js";
 import Maps from "views/Maps.js";
 import Notifications from "views/Notifications.js";
@@ -23,10 +26,10 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/table",
+    path: "/registro-ventas",
     name: "Registro de ventas",
     icon: "fas fa-clipboard-list",
-    component: TableList,
+    component: RegistroVentas,
     layout: "/admin",
   },
   {

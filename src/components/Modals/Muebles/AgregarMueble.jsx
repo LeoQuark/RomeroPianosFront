@@ -2,34 +2,34 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import API_URL from "../../../utils/api-data.js";
 
-function AgregarPiano() {
+function AgregarMueble() {
   const [show, setShow] = useState(false);
-  const [datosPiano, setDatosPiano] = useState({});
+  const [datosMueble, setDatosMueble] = useState({});
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleInput = (event) => {
     event.preventDefault();
-    setDatosPiano({ ...datosPiano, [event.target.name]: event.target.value });
-    console.log(datosPiano);
+    setDatosMueble({ ...datosMueble, [event.target.name]: event.target.value });
+    console.log(datosMueble);
   };
 
   function agregarDB() {
     console.log("agregar a base de datos");
-    console.log(datosPiano);
+    console.log(datosMueble);
   }
 
   return (
     <>
       <button className="btn btn-yellow text-sm" onClick={handleShow}>
-        Agregar piano
+        Agregar mueble
       </button>
 
       <Modal show={show} onHide={handleClose}>
         <form action="" onSubmit={agregarDB}>
           <Modal.Header closeButton className="py-0">
-            <Modal.Title>Agrega un piano</Modal.Title>
+            <Modal.Title>Agrega un mueble</Modal.Title>
           </Modal.Header>
           <Modal.Body className="py-0">
             <div>
@@ -102,4 +102,4 @@ function AgregarPiano() {
   );
 }
 
-export default AgregarPiano;
+export default AgregarMueble;

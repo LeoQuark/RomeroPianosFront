@@ -43,7 +43,12 @@ function InfoProducto({ producto, tipo, nombre }) {
         </Modal.Body>
         <Modal.Footer>
           <div className="d-flex w-100 justify-content-between mt-4">
-            <button className="btn btn-sm btn-yellow">Todo Ok</button>
+            <button
+              className="btn btn-sm btn-yellow"
+              onClick={() => setShow(false)}
+            >
+              Todo Ok
+            </button>
             <button className="btn-outline-gray" onClick={() => setShow(false)}>
               Cerrar
             </button>

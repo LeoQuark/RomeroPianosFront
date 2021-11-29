@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Card, Table } from "react-bootstrap";
 
-import AgregarMueble from "../Modals/Muebles/AgregarMueble.jsx";
+import AgregarProdSerie from "../Modals/ProdSeries/AgregarProdSerie.jsx";
 import EditarPiano from "../Modals/Pianos/EditarPiano.jsx";
 import EliminarProducto from "../Modals/EliminarProducto.jsx";
 import InfoProducto from "../Modals/InfoProducto.jsx";
 import Cargando from "../Cargando.jsx";
 
-function TablaMuebles({ muebles, cargando }) {
+function TablaProdSeries({ prod_serie, cargando }) {
   // const [cargando, setCargando] = useState(<Cargando />);
   useEffect(() => {}, []);
 
@@ -16,14 +16,14 @@ function TablaMuebles({ muebles, cargando }) {
       <Card.Header>
         <div className="row d-flex justify-content-between">
           <div className="col-12 col-sm-8 col-lg-6">
-            <Card.Title as="h4">Inventario de Muebles</Card.Title>
+            <Card.Title as="h4">Inventario de Productos en Serie</Card.Title>
             <p className="card-category">
               Aquí puedes agregar un nuevo producto, ver la información, editar
               y eliminar tus productos de tu inventario.
             </p>
           </div>
           <div className="col-12 col-sm-3 col-lg-2">
-            <AgregarMueble />
+            <AgregarProdSerie />
           </div>
         </div>
       </Card.Header>
@@ -42,8 +42,8 @@ function TablaMuebles({ muebles, cargando }) {
             </tr>
           </thead>
           <tbody>
-            {muebles ? (
-              muebles.map((piano, key) => (
+            {prod_serie ? (
+              prod_serie.map((piano, key) => (
                 <tr>
                   <td className="text-dark" scope="row">
                     {key + 1}
@@ -79,4 +79,4 @@ function TablaMuebles({ muebles, cargando }) {
   );
 }
 
-export default TablaMuebles;
+export default TablaProdSeries;

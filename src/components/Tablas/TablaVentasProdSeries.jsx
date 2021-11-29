@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Card, Table } from "react-bootstrap";
 
-import AgregarMueble from "../Modals/Muebles/AgregarMueble.jsx";
+import AgregarPiano from "../Modals/Pianos/AgregarPiano.jsx";
 import EditarPiano from "../Modals/Pianos/EditarPiano.jsx";
 import EliminarProducto from "../Modals/EliminarProducto.jsx";
 import InfoProducto from "../Modals/InfoProducto.jsx";
 import Cargando from "../Cargando.jsx";
 
-function TablaMuebles({ muebles, cargando }) {
+function TablaVentasProdSeries() {
   // const [cargando, setCargando] = useState(<Cargando />);
   useEffect(() => {}, []);
 
@@ -16,34 +16,30 @@ function TablaMuebles({ muebles, cargando }) {
       <Card.Header>
         <div className="row d-flex justify-content-between">
           <div className="col-12 col-sm-8 col-lg-6">
-            <Card.Title as="h4">Inventario de Muebles</Card.Title>
+            <Card.Title as="h4">Ventas de Productos en Serie</Card.Title>
             <p className="card-category">
-              Aquí puedes agregar un nuevo producto, ver la información, editar
-              y eliminar tus productos de tu inventario.
+              Aquí pueder agregar y ver la información de las ventas realizadas.
             </p>
           </div>
           <div className="col-12 col-sm-3 col-lg-2">
-            <AgregarMueble />
+            {/* <AgregarPiano /> */}
           </div>
         </div>
       </Card.Header>
       <Card.Body className="table-full-width table-responsive px-0">
         <Table className="table-hover">
-          <thead>
+          {/* <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Nombre</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Usuario</th>
               <th scope="col">Precio</th>
-              <th scope="col">Tipo</th>
-              <th scope="col">Marca</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Fecha Ingreso</th>
-              <th scope="col">Acciones</th>
+              <th scope="col">Fecha</th>
             </tr>
           </thead>
           <tbody>
-            {muebles ? (
-              muebles.map((piano, key) => (
+            {ventas ? (
+              ventas.map((piano, key) => (
                 <tr>
                   <td className="text-dark" scope="row">
                     {key + 1}
@@ -68,15 +64,13 @@ function TablaMuebles({ muebles, cargando }) {
                 </tr>
               ))
             ) : (
-              <tr style={{ borderBottom: "1px solid white" }}>
-                {cargando ? <Cargando /> : <td>No hay productos</td>}
-              </tr>
+              <div>{cargando ? <Cargando /> : "No hay productos"}</div>
             )}
-          </tbody>
+          </tbody> */}
         </Table>
       </Card.Body>
     </Card>
   );
 }
 
-export default TablaMuebles;
+export default TablaVentasProdSeries;

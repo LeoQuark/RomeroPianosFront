@@ -13,18 +13,10 @@ function Sidebar({ routes }) {
   return (
     <div className="sidebar" data-color={"black"}>
       <div className="sidebar-wrapper">
-        <div className="logo d-flex align-items-center justify-content-center">
-          {/* <a href="" className="simple-text logo-mini mx-1">
-             <div className="logo-img">
-              <img
-                src={require("assets/img/RomeroPianos.png").default}
-                alt="..."
-              />
-            </div> 
-          </a> */}
-          <a className="simple-text">
+        <div className="d-flex align-items-center justify-content-center">
+          <h4 className="simple-text">
             Romero <span style={{ color: "#b38c4b" }}>Pianos</span>
-          </a>
+          </h4>
         </div>
         <Nav>
           {routes.map((prop, key) => {
