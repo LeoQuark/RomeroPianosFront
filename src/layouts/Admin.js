@@ -45,7 +45,7 @@ function Admin() {
         <Sidebar routes={routes} />
         <div className="main-panel" ref={mainPanel}>
           <AdminNavbar />
-          <div className="content">
+          <div className="content-fluid">
             <Switch>{getRoutes(routes)}</Switch>
           </div>
           <Footer />

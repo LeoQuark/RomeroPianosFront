@@ -86,5 +86,10 @@
      background-color: $orange-navbar;
 }
 .alert-danger {
-     background-color: $red-navbar;
+    border: 2px solid #EE2D20;
+    border-radius:.2rem;
+    background:$red-navbar;
+    color: white;
+    font-weight: bold;
 }
+

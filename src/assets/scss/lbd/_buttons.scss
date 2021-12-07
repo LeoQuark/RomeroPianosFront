@@ -37,7 +37,7 @@
 .btn-yellow { @include btn-styles($white-color, $yellow-rp); }
 .btn-danger  { @include btn-styles($white-color, $danger-states-color); }
 .btn-dark  { @include btn-styles($white-color, $default-states-color); }
-.btn-outline-secondary { @include btn-styles($black-hr, $white-color); }
+// .btn-outline-secondary { @include btn-styles($black-hr, $white-color); }
 .btn-neutral {
     @include btn-styles($white-color, $white-color);
 

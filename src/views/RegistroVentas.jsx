@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import API_URL from "../utils/api-data.js";
 
-import Cargando from "../components/Cargando.jsx";
 import TablaVentas from "../components/Tablas/TablaVentas.jsx";
 import TablaVentasProdSeries from "../components/Tablas/TablaVentasProdSeries.jsx";
 
@@ -15,16 +14,6 @@ const RegistroVentas = () => {
   const [ventasProdSeries, setVentasProdSeries] = useState(false);
 
   //funciones
-  // const obtenerProductos = async () => {
-  //   const resPianos = await axios.get(`${API_URL}/piano/getAll`);
-  //   if (resPianos.status == 200) {
-  //     setVentas(resPianos.data.data);
-  //     setCargando(false);
-  //   } else {
-  //     console.log(resPianos);
-  //   }
-  // };
-
   function Paneles() {
     if (verPanel === "ventas") {
       return <TablaVentas />;

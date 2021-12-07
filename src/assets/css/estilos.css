@@ -1,8 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat&display=swap");
+
 :root {
   --blackRP: #1d1c1c;
   --yellowRP: #b38c4b;
   --grisRP: #8c8c8c;
   --blancoRP: #d6d5d6;
+}
+
+a {
+  text-decoration: none;
 }
 
 /* estilos para el tamaño del texto */
@@ -21,6 +27,20 @@
   line-height: 1.5rem;
 }
 
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+@media (max-width: 576px) {
+  .text-xl {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+/* estilos para botones personalizados */
+
 .btn-outline-gray {
   border: 2px solid #888888;
   color: #888888;
@@ -33,4 +53,63 @@
 .btn-outline-gray:hover {
   background: #888888;
   color: white;
+}
+
+.btn-outline-black {
+  border: 2px solid #1d1c1c;
+  color: #888888 !important;
+  background: white;
+  border-radius: 0.2rem;
+  padding: 4px 12px;
+  font-size: 12px;
+}
+
+.btn-outline-black:hover {
+  background: #1d1c1c;
+  color: white;
+}
+
+/* Estilos para texto personalizado */
+
+.font-romero-pianos {
+  font-family: "Caveat", cursive;
+}
+
+.text-yellow {
+  color: var(--yellowRP);
+}
+
+/* Animaciones? */
+.fade-in {
+  -webkit-animation: fadein 0.5s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 0.5s; /* Firefox < 16 */
+  -ms-animation: fadein 0.5s; /* Internet Explorer */
+  -o-animation: fadein 0.5s; /* Opera < 12.1 */
+  animation: fadein 0.5s;
+}
+
+.fade-out {
+  -webkit-animation: fadeout 0.5s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadeout 0.5s; /* Firefox < 16 */
+  -ms-animation: fadeout 0.5s; /* Internet Explorer */
+  -o-animation: fadeout 0.5s; /* Opera < 12.1 */
+  animation: fadeout 0.5s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
