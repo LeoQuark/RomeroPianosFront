@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import { useLocation, Route, Switch } from "react-router-dom";
+import CarritoState from "../context/Carrito/CarritoState.js";
 
 import AdminNavbar from "components/Navbars/AdminNavbar";
 import Footer from "components/Footer/Footer";
@@ -40,7 +41,7 @@ function Admin() {
     }
   }, [location]);
   return (
-    <>
+    <CarritoState>
       <div className="wrapper">
         <Sidebar routes={routes} />
         <div className="main-panel" ref={mainPanel}>
@@ -51,15 +52,7 @@ function Admin() {
           <Footer />
         </div>
       </div>
-      {/* <FixedPlugin
-        hasImage={hasImage}
-        setHasImage={() => setHasImage(!hasImage)}
-        color={color}
-        setColor={(color) => setColor(color)}
-        image={image}
-        setImage={(image) => setImage(image)}
-      /> */}
-    </>
+    </CarritoState>
   );
 }
 

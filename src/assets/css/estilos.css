@@ -57,8 +57,8 @@ a {
 
 .btn-outline-black {
   border: 2px solid #1d1c1c;
-  color: #888888 !important;
-  background: white;
+  color: white;
+  background: #1d1c1c;
   border-radius: 0.2rem;
   padding: 4px 12px;
   font-size: 12px;

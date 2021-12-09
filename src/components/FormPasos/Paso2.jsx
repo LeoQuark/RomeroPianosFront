@@ -1,46 +1,65 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import CarritoContext from "../../context/Carrito/CarritoContext.js";
 import { getVentasLocalStorage } from "../../utils/Storage.js";
 
+//segundo paso para agregar una venta -- resumen del carrito
 function Paso2() {
-  const [carrito, setCarrito] = useState([]);
+  //useContext del carrito de ventas
+  const { carrito, eliminarProducto } = useContext(CarritoContext);
 
-  const handleSelect = (event) => {
+  //funcion para eliminar un producto del carrito -- ocupando un reducer
+  const clickEliminar = (event, producto) => {
     event.preventDefault();
-    console.log(event.target.value);
+    eliminarProducto(producto);
   };
 
   useEffect(() => {
     //se obtienen los datos del local storage (venta)
-    setCarrito(getVentasLocalStorage());
+    // setCarrito(getVentasLocalStorage());
   }, []);
 
   return (
     <div>
       <div>Paso 2: Resumen</div>
-      {/* <div className="mb-2">
-        <label htmlFor=""></label>
-        <select
-          name=""
-          id=""
-          className="form-select form-select-sm"
-          onChange={handleSelect}
-        >
-          <option value="piano">Pianos</option>
-          <option value="muebles">Muebles</option>
-          <option value="prod_serie">Productos en Serie</option>
-        </select>
-      </div> */}
       <div>
         <table className="table table-sm table-hover overflow-scroll">
           <thead>
             <th scope="col">#</th>
             <th scope="col">Nombre</th>
+            <th scope="col">Tipo</th>
             <th scope="col">Precio</th>
+            <th scope="col">Eliminar</th>
           </thead>
           <tbody>
-            <tr>
-              <td>{console.log(carrito)}</td>
-            </tr>
+            {carrito.productos ? (
+              carrito.productos.map(
+                (producto, key) =>
+                  key != 0 && (
+                    <tr>
+                      <td className="text-dark" scope="row">
+                        {key}
+                      </td>
+                      <td className="text-dark text-capitalize">
+                        {producto.nombre}
+                      </td>
+                      <td className="text-dark text-capitalize">
+                        {producto.tipo}
+                      </td>
+                      <td className="text-dark">{producto.precio}</td>
+                      <td>
+                        <button
+                          className="btn btn-sm btn-secondary"
+                          onClick={(event) => clickEliminar(event, producto)}
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  )
+              )
+            ) : (
+              <div>{"No hay productos"}</div>
+            )}
           </tbody>
         </table>
       </div>

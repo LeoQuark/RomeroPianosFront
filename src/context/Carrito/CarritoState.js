@@ -1,45 +1,51 @@
 import React, { useReducer } from "react";
 import CarritoContext from "./CarritoContext";
 import CarritoReducer from "./CarritoReducer";
+import { types } from "./types.js";
 
-//Creación del estado global User, donde se hará uso de useContext y useReducer.
+//Creación del estado global Carrito, donde se hará uso de useContext y useReducer.
 export const CarritoState = (props) => {
   const initialState = {
-    isLoged: false,
-    id_usuario: "",
-    nombre: "",
-    correo: "",
+    // selectPianos=[],
+    // selectMuebles=[],
+    productos: [{ id: "", nombre: "", tipo: "", precio: "" }],
   };
 
-  const [usuario, dispatch] = useReducer(UsuarioReducer, initialState);
+  const [carrito, dispatch] = useReducer(CarritoReducer, initialState);
 
-  const setUsuario = (datos) => {
-    // console.log(datos);
+  const agregarProducto = (dato) => {
     dispatch({
-      type: "SET_LOGIN",
-      payload: datos,
+      type: types.ADD_TO_CART,
+      payload: dato,
     });
   };
 
-  // const signOff = (datos) => {
-  //   dispatch({
-  //     type: "SIGN_OFF",
-  //     payload: datos,
-  //   });
-  // };
+  const eliminarProducto = (dato) => {
+    dispatch({
+      type: types.REMOVE_ONE_FROM_CART,
+      payload: dato,
+    });
+  };
 
-  //Se retorna el UserContext.Provider para que los hijos de este componente puedan acceder a los valores del state global User y sus metodos o funciones.
+  const limpiarCarro = (initialState) => {
+    dispatch({
+      type: types.CLEAR_CART,
+      payload: initialState,
+    });
+  };
+
+  //Se retorna el CarritoContext.Provider para que los hijos de este componente puedan acceder a los valores del state global carrito y sus metodos o funciones.
   return (
-    <UsuarioContext.Provider
+    <CarritoContext.Provider
       value={{
-        usuario,
-        setUsuario,
-        // signOff,
+        carrito,
+        agregarProducto,
+        eliminarProducto,
       }}
     >
       {props.children}
-    </UsuarioContext.Provider>
+    </CarritoContext.Provider>
   );
 };
 
-export default UsuarioState;
+export default CarritoState;

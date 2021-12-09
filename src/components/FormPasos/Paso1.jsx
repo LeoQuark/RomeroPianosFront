@@ -1,114 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import CarritoContext from "../../context/Carrito/CarritoContext.js";
 import { setVentasLocalStorage } from "../../utils/Storage.js";
+import TablaPianosCarrito from "./TablaPianosCarrito.jsx";
+import TablaMueblesCarrito from "./TablaMueblesCarrito.jsx";
 
+//primer paso para agregar una venta -- agregar productos pianos y/o muebles al carrito
 function Paso1({ pianos, muebles }) {
+  //contexto del carrito y variables
+  const { carrito, agregarProducto } = useContext(CarritoContext);
   const [tipo, setTipo] = useState("piano");
-  const [carrito, setCarrito] = useState([]);
 
+  //funcion que asigna el tipo de producto seleccionado en el select-options
   const handleSelect = (event) => {
     event.preventDefault();
     setTipo(`${event.target.value}`);
   };
 
   //agregar los productos seleccionados al estado carrito [objeto,objeto,objeto]
-  const agregarProductos = (event, producto) => {
+  const agregarProductos = (event, producto, tipo) => {
     event.preventDefault();
-    setCarrito([...carrito, producto]);
-    console.log(carrito);
-    // agrego los datos al local storage
-    setVentasLocalStorage(JSON.stringify(carrito));
+    const productoSeleccionado = {
+      id: `${producto[`id_${tipo}`]}`,
+      nombre: producto.nombre,
+      tipo,
+      precio:
+        tipo === "piano"
+          ? producto.precio
+          : tipo === "mueble"
+          ? producto.costo_dolar
+          : "1000",
+    };
+    agregarProducto(productoSeleccionado);
   };
 
-  //Funcion que retorna una tabla en funcion del tipo(options) seleccionado
-  function TablaProductos() {
-    if (tipo === "piano") {
-      return (
-        <div>
-          <table className="table table-sm table-hover overflow-scroll">
-            <thead>
-              <th scope="col">#</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Tipo</th>
-              <th scope="col">Marca</th>
-              <th scope="col">Precio</th>
-              <th scope="col">Seleccion</th>
-            </thead>
-            <tbody>
-              {pianos ? (
-                pianos.map((piano, index) => (
-                  <tr>
-                    <th scope="row">{index + 1}</th>
-                    <td>{piano.nombre}</td>
-                    <td>{piano.tipo}</td>
-                    <td>{piano.marca}</td>
-                    <td>{piano.precio}</td>
-                    <td>
-                      <button
-                        className="btn btn-sm btn-yellow"
-                        onClick={(event) => agregarProductos(event, piano)}
-                      >
-                        Agregar
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td>1</td>
-                  <td>piano 1</td>
-                  <td>$50000</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      );
-    } else if (tipo === "mueble") {
-      return (
-        <div>
-          <table className="table table-sm table-hover overflow-scroll">
-            <thead>
-              <th scope="col">#</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Categoria</th>
-              <th scope="col">Origen</th>
-              <th scope="col">Precio</th>
-              <th scope="col">Seleccion</th>
-            </thead>
-            <tbody>
-              {muebles ? (
-                muebles.map((mueble, index) => (
-                  <tr>
-                    <th scope="row">{index + 1}</th>
-                    <td>{mueble.nombre}</td>
-                    <td>{mueble.categoria}</td>
-                    <td>{mueble.origen}</td>
-                    <td>{mueble.precio}</td>
-                    <td>
-                      <button
-                        className="btn btn-sm btn-yellow"
-                        onClick={(event) => agregarProductos(event, mueble)}
-                      >
-                        Agregar
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td>1</td>
-                  <td>piano 1</td>
-                  <td>$50000</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      );
-    }
-  }
-
-  useEffect(() => {}, []);
+  useEffect(() => {}, [carrito]);
 
   return (
     <div>
@@ -124,10 +49,25 @@ function Paso1({ pianos, muebles }) {
         >
           <option value="piano">Pianos</option>
           <option value="mueble">Muebles</option>
-          <option value="prod_serie">Productos en Serie</option>
         </select>
       </div>
-      <div>{TablaProductos()}</div>
+      <div>
+        {tipo === "piano" ? (
+          <TablaPianosCarrito
+            pianos={pianos}
+            agregarProductos={agregarProductos}
+            carrito={carrito}
+          />
+        ) : (
+          tipo === "mueble" && (
+            <TablaMueblesCarrito
+              muebles={muebles}
+              agregarProductos={agregarProductos}
+              carrito={carrito}
+            />
+          )
+        )}
+      </div>
     </div>
   );
 }

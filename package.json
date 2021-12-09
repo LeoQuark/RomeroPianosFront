@@ -18,7 +18,8 @@
     "react-redux": "^7.2.6",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
-    "react-scripts": "4.0.1"
+    "react-scripts": "4.0.1",
+    "use-dynamic-refs": "^1.0.0"
   },
   "optionalDependencies": {
     "jquery": "3.5.1",
