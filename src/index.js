@@ -16,15 +16,14 @@ import UsuarioState from "./context/Usuario/UsuarioState.js";
 import PublicRoute from "./routes/PublicRoute.jsx";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
 import Auth from "./layouts/Auth.js";
-import AdminLayout from "layouts/Admin.js";
+import Admin from "layouts/Admin.js";
 
 ReactDOM.render(
   <UsuarioState>
     <BrowserRouter>
       <Switch>
         <PublicRoute component={Auth} path="/auth" exact />
-        <PrivateRoute component={AdminLayout} path="/admin" />
-        {/* <Route path="/admin" render={(props) => <AdminLayout {...props} />} /> */}
+        <PrivateRoute component={Admin} path="/admin" />
         <Redirect from="/" to="/auth" />
       </Switch>
     </BrowserRouter>

@@ -32,12 +32,19 @@ export const getVentasLocalStorage = () => {
   return JSON.parse(venta);
 };
 
+export const removeLocalStorage = () => {
+  localStorage.removeItem("venta");
+};
+
 //EXPORT
 export default {
+  // FUNCIONES PARA EL SESSION STORAGE
   setUsuarioSessionStorage,
   removeSessionStorage,
   getTokenSessionStorage,
   getUsuarioSessionStorage,
+  //FUNCIONES PARA EL LOCAL STORAGE
   setVentasLocalStorage,
   getVentasLocalStorage,
+  removeLocalStorage,
 };

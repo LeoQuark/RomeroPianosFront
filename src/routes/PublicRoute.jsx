@@ -1,21 +1,29 @@
 import React, { useContext } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { useHistory, Route, Redirect } from "react-router-dom";
 import UsuarioContext from "../context/Usuario/UsuarioContext.js";
+import { getTokenSessionStorage } from "../utils/Storage.js";
 
 const PublicRoute = ({ component: Component, restricted, ...rest }) => {
-  const { usuario } = useContext(UsuarioContext);
+  const { usuario, removerUsuario } = useContext(UsuarioContext);
   const { isLoged } = usuario;
-  // console.log(isLoged, restricted);
+  console.log("isLoged", isLoged);
 
   React.useEffect(() => {
-    // if (isLoged) restricted = true;
+    const token = getTokenSessionStorage();
+    if (!token) {
+      removerUsuario();
+    }
   }, []);
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        restricted ? <Redirect to="/admin" /> : <Component {...props} />
+        isLoged && restricted ? (
+          <Redirect to="/admin" />
+        ) : (
+          <Component {...props} />
+        )
       }
     />
   );

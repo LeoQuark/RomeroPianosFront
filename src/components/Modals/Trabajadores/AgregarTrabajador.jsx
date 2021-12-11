@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal } from "react-bootstrap";
-import API_URL from "../../../utils/api-data.js";
+import { Modal } from "react-bootstrap";
+import axios from "axios";
 
-function AgregarPiano() {
+function AgregarTrabajador() {
   const [show, setShow] = useState(false);
   const [datosPiano, setDatosPiano] = useState({});
 
@@ -23,77 +23,58 @@ function AgregarPiano() {
   return (
     <>
       <button className="btn btn-yellow text-sm" onClick={handleShow}>
-        Agregar piano
+        Agregar Trabajador
       </button>
 
       <Modal show={show} onHide={handleClose}>
         <form action="" onSubmit={agregarDB}>
-          <Modal.Header closeButton className="py-0 ">
-            <Modal.Title>Ingresa los datos del piano</Modal.Title>
+          <Modal.Header closeButton className="py-0">
+            <Modal.Title>Ingresa sus datos</Modal.Title>
           </Modal.Header>
           <Modal.Body className="py-0">
             <div>
-              <div className="d-flex justify-content-between">
+              <div className="d-flex justify-content-between w-100">
                 <div className="mb-2 w-100 mx-1">
-                  <label htmlFor="">Nombre</label>
+                  <label className="text-sm">Nombre</label>
                   <input
                     type="text"
                     name="nombre"
                     className="form-control"
-                    placeholder="Nombre del piano"
+                    placeholder="Nombre y apellido"
                     onChange={handleInput}
                   />
                 </div>
                 <div className="mb-2 w-100 mx-1">
-                  <label htmlFor="">Precio</label>
+                  <label className="text-sm">Teléfono</label>
                   <input
-                    name="precio"
+                    name="telefono"
                     type="number"
                     className="form-control"
-                    placeholder="$$$"
+                    placeholder="9 1234 5678"
                     onChange={handleInput}
                   />
                 </div>
               </div>
-              <div className="d-flex justify-content-between">
-                <div className="mb-2 w-100 mx-1">
-                  <label htmlFor="">Tipo</label>
-                  <input
-                    name="tipo"
-                    type="text"
-                    className="form-control"
-                    placeholder="Tipo de piano"
-                    onChange={handleInput}
-                  />
-                </div>
-                <div className="mb-2 w-100 mx-1">
-                  <label htmlFor="">Marca</label>
-                  <input
-                    name="marca"
-                    type="text"
-                    className="form-control"
-                    placeholder="Marca del piano"
-                    onChange={handleInput}
-                  />
-                </div>
-              </div>
-              <div className="mb-2">
-                <label htmlFor="">Estado</label>
-                {/* <input
-                  name="estado_piano"
-                  type="text"
+              <div className="mb-2 mx-1">
+                <label className="text-sm">Correo</label>
+                <input
+                  type="email"
+                  name="correo"
                   className="form-control"
+                  placeholder="ejemplo@gmail.com"
                   onChange={handleInput}
-                /> */}
-                <select
-                  name="estado_piano"
-                  id=""
-                  className="form-select form-select-sm"
+                />
+              </div>
+              <div className="mb-2 mx-1">
+                <label className="text-sm">Cuenta bancaria</label>
+                <textarea
+                  name="cuentaBancaria"
+                  type="text"
+                  rows="2"
+                  className="form-control h-100"
+                  placeholder="Datos de la cuenta bancaria"
                   onChange={handleInput}
-                >
-                  <option value="bodega">En bodega</option>
-                  <option value="reparacion">Reparación</option>
-                </select>
+                />
               </div>
             </div>
             <div className="d-flex w-100 justify-content-between mt-4">
@@ -115,4 +96,4 @@ function AgregarPiano() {
   );
 }
 
-export default AgregarPiano;
+export default AgregarTrabajador;

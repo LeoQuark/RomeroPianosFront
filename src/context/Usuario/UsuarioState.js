@@ -14,19 +14,17 @@ export const UsuarioState = (props) => {
   const [usuario, dispatch] = useReducer(UsuarioReducer, initialState);
 
   const setUsuario = (datos) => {
-    // console.log(datos);
     dispatch({
       type: "SET_LOGIN",
       payload: datos,
     });
   };
 
-  // const signOff = (datos) => {
-  //   dispatch({
-  //     type: "SIGN_OFF",
-  //     payload: datos,
-  //   });
-  // };
+  const removerUsuario = () => {
+    dispatch({
+      type: "SIGN_OFF",
+    });
+  };
 
   //Se retorna el UserContext.Provider para que los hijos de este componente puedan acceder a los valores del state global User y sus metodos o funciones.
   return (
@@ -34,7 +32,7 @@ export const UsuarioState = (props) => {
       value={{
         usuario,
         setUsuario,
-        // signOff,
+        removerUsuario,
       }}
     >
       {props.children}

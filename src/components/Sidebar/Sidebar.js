@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink, Link } from "react-router-dom";
 
 import { Nav } from "react-bootstrap";
 
@@ -14,9 +14,11 @@ function Sidebar({ routes }) {
     <div className="sidebar" data-color={"black"}>
       <div className="sidebar-wrapper">
         <div className="d-flex align-items-center justify-content-center">
-          <h4 className="simple-text">
-            Romero <span style={{ color: "#b38c4b" }}>Pianos</span>
-          </h4>
+          <Link className="text-white" to="/admin/dashboard">
+            <h4 className="simple-text">
+              Romero <span style={{ color: "#b38c4b" }}>Pianos</span>
+            </h4>
+          </Link>
         </div>
         <Nav>
           {routes.map((prop, key) => {

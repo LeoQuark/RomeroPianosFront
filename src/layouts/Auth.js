@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import fondo from "../assets/img/fondo-piano.jpg";
 import { API_URL } from "../utils/api-data.js";
 // import isLogin
@@ -8,11 +8,13 @@ import UsuarioContext from "../context/Usuario/UsuarioContext.js";
 import {
   setUsuarioSessionStorage,
   removeSessionStorage,
+  removeLocalStorage,
 } from "../utils/Storage.js";
 
+// Componente para el Login y autenticación del usuario
 const Auth = () => {
   const history = useHistory();
-  const { setUsuario } = useContext(UsuarioContext);
+  const { usuario, setUsuario } = useContext(UsuarioContext);
   const [errorLogin, setErrorLogin] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [datosUsuario, setDatosUsuario] = useState({});
@@ -23,7 +25,6 @@ const Auth = () => {
       ...datosUsuario,
       [event.target.name]: event.target.value,
     });
-    console.log(datosUsuario);
   };
 
   const iniciarSesion = (event) => {
@@ -46,7 +47,6 @@ const Auth = () => {
             token,
             JSON.stringify(response.data.usuario)
           );
-          // console.log(response);
           history.push(`/admin/dashboard`);
         }
       },
@@ -62,6 +62,7 @@ const Auth = () => {
 
   useEffect(() => {
     removeSessionStorage();
+    removeLocalStorage();
   }, []);
 
   return (
@@ -73,14 +74,6 @@ const Auth = () => {
               <div className="d-flex justify-content-center py-5 ">
                 <div>
                   <p className="text-sm text-muted text-center">Bienvenido a</p>
-                  {/* <div className="d-flex justify-content-center">
-                    <img
-                      src={logo}
-                      alt=""
-                      className="rounded-circle img-fluid"
-                      style={{ width: "35%", height: "40%" }}
-                    />
-                  </div> */}
                   <h2
                     className="font-romero-pianos my-4"
                     style={{ fontSize: "58px" }}
