@@ -33,21 +33,20 @@ function EliminarProducto({ producto, tipo, nombre }) {
             <div className="text-md">{`¿Estas seguro(a) de eliminar el ${tipo} "${nombre}" de tu ${
               tipo != "trabajador" ? "inventario" : "base de datos"
             }?`}</div>
-          </Modal.Body>
-          <Modal.Footer>
-            <div className="d-flex w-100 justify-content-between mt-4">
+            <div className="d-flex justify-content-start pt-4">
               <button type="submit" className="btn btn-sm btn-danger">
                 Sí, eliminar
               </button>
-              <button
-                className="btn-outline-gray"
-                onClick={() => setShow(false)}
-              >
-                Cerrar
-              </button>
             </div>
-          </Modal.Footer>
+          </Modal.Body>
         </form>
+        <Modal.Footer>
+          <div className="d-flex w-100 justify-content-end">
+            <button className="btn-outline-gray" onClick={() => setShow(false)}>
+              Cerrar
+            </button>
+          </div>
+        </Modal.Footer>
       </Modal>
     </>
   );

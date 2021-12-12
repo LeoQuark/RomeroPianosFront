@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Table } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../utils/api-data.js";
@@ -31,7 +31,7 @@ const Trabajadores = () => {
         <Card.Header>
           <div className="row d-flex justify-content-between">
             <div className="col-12 col-sm-8 col-lg-6">
-              <Card.Title as="h4">Inventario de Pianos</Card.Title>
+              <Card.Title as="h4">Registro de trabajador</Card.Title>
               <p className="card-category">
                 Aquí puedes agregar un nuevo producto, ver la información,
                 editar y eliminar tus productos de tu inventario.

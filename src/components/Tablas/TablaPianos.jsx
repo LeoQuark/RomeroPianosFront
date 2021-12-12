@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Table } from "react-bootstrap";
+import { formatearFecha } from "../../utils/fecha.js";
 
 import AgregarPiano from "../Modals/Pianos/AgregarPiano.jsx";
 import EditarPiano from "../Modals/Pianos/EditarPiano.jsx";
@@ -8,8 +9,52 @@ import InfoProducto from "../Modals/InfoProducto.jsx";
 import Cargando from "../Cargando.jsx";
 
 function TablaPianos({ pianos, cargando }) {
-  // const [cargando, setCargando] = useState(<Cargando />);
-  useEffect(() => {}, []);
+  const [btnFiltrar, setBtnFiltrar] = useState(false);
+  const [filtro, setFiltro] = useState("");
+  const [paginacion, setPaginacion] = useState(0);
+
+  const filtrarDatos = () => {
+    if (filtro.length === 0) {
+      return pianos.slice(paginacion, paginacion + 5);
+    }
+    //si hay un nombre para filtrar
+    const productoFiltrado = pianos.filter((prod) => {
+      return prod.nombre.includes(filtro);
+    });
+    return productoFiltrado.slice(paginacion, paginacion + 5);
+  };
+  console.log("ahora", filtro);
+  const abrirInputFiltro = () => {
+    console.log(btnFiltrar);
+    if (btnFiltrar == false) {
+      setBtnFiltrar(!btnFiltrar);
+    } else {
+      setFiltro("");
+      setBtnFiltrar(!btnFiltrar);
+    }
+  };
+
+  //funciones para la paginacion
+  const siguiente = () => {
+    if (
+      pianos.filter((prod) => prod.nombre.includes(filtro)).length >
+      paginacion + 5
+    )
+      setPaginacion(paginacion + 5);
+  };
+  const atras = () => {
+    if (paginacion > 0) setPaginacion(paginacion - 5);
+  };
+
+  const filtrarNombre = (event) => {
+    setPaginacion(0);
+    setFiltro(event.target.value);
+  };
+
+  const numConsecutivos = (num) => {
+    if (paginacion === 0) return num;
+    else return paginacion + num;
+  };
 
   return (
     <Card className="strpied-tabled-with-hover">
@@ -28,6 +73,25 @@ function TablaPianos({ pianos, cargando }) {
         </div>
       </Card.Header>
       <Card.Body className="table-full-width table-responsive px-0">
+        <div className="container-fluid px-3 py-2">
+          <div className="d-flex justify-content-start">
+            <button className="btn btn-sm btn-dark" onClick={abrirInputFiltro}>
+              Filtrar
+            </button>
+            {btnFiltrar && (
+              <div className="w-25 mx-2">
+                <input
+                  type="text"
+                  name="filtrar"
+                  className="form-control"
+                  placeholder="Filtrar por nombre"
+                  value={filtro}
+                  onChange={filtrarNombre}
+                />
+              </div>
+            )}
+          </div>
+        </div>
         <Table className="table-hover">
           <thead>
             <tr>
@@ -43,17 +107,15 @@ function TablaPianos({ pianos, cargando }) {
           </thead>
           <tbody>
             {pianos ? (
-              pianos.map((piano, key) => (
+              filtrarDatos().map((piano, key) => (
                 <tr>
-                  <td className="text-dark" scope="row">
-                    {key + 1}
-                  </td>
+                  <td className="text-dark">{numConsecutivos(key + 1)}</td>
                   <td className="text-dark">{piano.nombre}</td>
                   <td className="text-dark">{piano.precio}</td>
                   <td className="text-dark">{piano.tipo}</td>
                   <td className="text-dark">{piano.marca}</td>
                   <td className="text-dark">{piano.estado_piano}</td>
-                  <td className="text-dark">{piano.fecha}</td>
+                  <td className="text-dark">{formatearFecha(piano.fecha)}</td>
                   <td className="text-dark">
                     <div className="d-flex justify-content-start justify-content-lg-between">
                       <EditarPiano piano={piano} />
@@ -72,6 +134,16 @@ function TablaPianos({ pianos, cargando }) {
             )}
           </tbody>
         </Table>
+        <div className="container-fluid">
+          <div className="d-flex justify-content-center w-100">
+            <button className="btn btn-sm btn-dark mx-2" onClick={atras}>
+              Anterior
+            </button>
+            <button className="btn btn-sm btn-dark mx-2" onClick={siguiente}>
+              Siguiente
+            </button>
+          </div>
+        </div>
       </Card.Body>
     </Card>
   );

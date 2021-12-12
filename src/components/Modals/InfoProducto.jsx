@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import API_URL from "../../utils/api-data.js";
+import { formatearFecha } from "../../utils/fecha.js";
 
 function InfoProducto({ producto, tipo, nombre }) {
   const [show, setShow] = useState(false);
@@ -33,7 +34,11 @@ function InfoProducto({ producto, tipo, nombre }) {
                     dato != `id_${tipo}` && (
                       <tr>
                         <td>{dato}</td>
-                        <td>{producto[`${dato}`]}</td>
+                        {dato === "fecha" ? (
+                          <td>{formatearFecha(producto[`${dato}`])}</td>
+                        ) : (
+                          <td>{producto[`${dato}`]}</td>
+                        )}
                       </tr>
                     )
                 )}
