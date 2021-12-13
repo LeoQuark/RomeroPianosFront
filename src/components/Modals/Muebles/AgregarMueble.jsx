@@ -12,7 +12,7 @@ const messageError = "Este campo es obligatorio";
 const schema = yup
   .object({
     nombre: yup.string().required(messageError),
-    costoDolar: yup.number().typeError(messageError).required(messageError),
+    costoFinal: yup.number().typeError(messageError).required(messageError),
     categoria: yup.string().required(messageError),
     origen: yup.string().required(messageError),
     estadoMueble: yup.string().required(messageError),
@@ -81,17 +81,17 @@ function AgregarMueble() {
                   </span>
                 </div>
                 <div className="mb-2 w-100 mx-1">
-                  <label className="text-sm">Costo dolar</label>
+                  <label className="text-sm">Costo Final</label>
                   <input
-                    name="costoDolar"
+                    name="costoFinal"
                     type="number"
                     className="form-control"
                     placeholder="$$$"
-                    {...register("costoDolar")}
+                    {...register("costoFinal")}
                     onChange={handleInput}
                   />
                   <span className="text-danger text-xs">
-                    {errors.costoDolar?.message}
+                    {errors.costoFinal?.message}
                   </span>
                 </div>
               </div>
@@ -142,20 +142,14 @@ function AgregarMueble() {
                 </span>
               </div>
             </div>
-            <div className="d-flex w-100 justify-content-between mt-4">
+            <div className="d-flex w-100 justify-content-end mt-4">
               <button type="submit" className="btn btn-yellow btn-sm">
                 Agregar
               </button>
             </div>
           </form>
         </Modal.Body>
-        <Modal.Footer>
-          {/* <div className="d-flex w-100 justify-content-end">
-            <button className="btn-outline-gray" onClick={() => setShow(false)}>
-              Cerrar
-            </button>
-          </div> */}
-        </Modal.Footer>
+        <Modal.Footer></Modal.Footer>
       </Modal>
     </>
   );

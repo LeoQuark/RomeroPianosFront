@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Modal } from "react-bootstrap";
-import axios from "axios";
-import API_URL from "../../../utils/api-data.js";
+import { Modal } from "react-bootstrap";
+import { obtenerTodos } from "../../../utils/peticiones.js";
 
 import Paso1 from "../../FormPasos/Paso1.jsx";
 import Paso2 from "../../FormPasos/Paso2.jsx";
@@ -12,8 +11,8 @@ function AgregarVenta() {
   const [datosPiano, setDatosPiano] = useState({});
   const [datosMueble, setDatosMueble] = useState({});
   const [datosProducto, setDatosProducto] = useState({});
-  const [paso, setPaso] = useState(0);
-  const [count, setCount] = useState(0);
+  const [paso, setPaso] = useState(1);
+  const [count, setCount] = useState(1);
 
   const handleClose = () => {
     setPaso(0);
@@ -26,36 +25,27 @@ function AgregarVenta() {
 
   const handleCount = (event) => {
     event.preventDefault();
-    if (count >= 1) {
-      setCount(0);
+    if (count === 1) {
+      setCount(2);
       setPaso(2);
-    } else if (count === 0) {
-      setCount(1);
+    } else if (count === 2) {
+      setCount(3);
       setPaso(3);
+    } else if (count === 3) {
+      setCount(1);
+      setPaso(1);
     }
   };
-
   const handleInput = (event) => {
     event.preventDefault();
     setDatosPiano({ ...datosPiano, [event.target.name]: event.target.value });
   };
 
-  const consultaAxios = async (ruta) => {
-    try {
-      const response = await axios.get(`${API_URL}/${ruta}/getAll`);
-      if (response.status === 200) {
-        return await response.data.data;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(async () => {
     const [pianos, muebles, prod_serie] = await Promise.all([
-      consultaAxios("piano"),
-      consultaAxios("mueble"),
-      consultaAxios("producto"),
+      obtenerTodos("piano"),
+      obtenerTodos("mueble"),
+      obtenerTodos("producto"),
     ]);
     setDatosPiano(pianos);
     setDatosMueble(muebles);
@@ -63,7 +53,14 @@ function AgregarVenta() {
   }, []);
 
   function FormularioPasos() {
-    if (paso === 1) return <Paso1 pianos={datosPiano} muebles={datosMueble} />;
+    if (paso === 1)
+      return (
+        <Paso1
+          pianos={datosPiano}
+          muebles={datosMueble}
+          productos={datosProducto}
+        />
+      );
     else if (paso === 2) return <Paso2 />;
     else if (paso === 3) return <Paso3 />;
   }
@@ -88,6 +85,7 @@ function AgregarVenta() {
                 style={{ marginRight: "6px" }}
                 onClick={(event) => {
                   event.preventDefault();
+                  setCount(1);
                   setPaso(1);
                 }}
               >
@@ -100,6 +98,7 @@ function AgregarVenta() {
                   style={{ marginRight: "6px" }}
                   onClick={(event) => {
                     event.preventDefault();
+                    setCount(2);
                     setPaso(2);
                   }}
                 >
@@ -117,13 +116,7 @@ function AgregarVenta() {
             )}
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <div className="d-flex w-100 justify-content-end mt-4">
-            <button className="btn-outline-gray" onClick={handleClose}>
-              Cerrar
-            </button>
-          </div>
-        </Modal.Footer>
+        <Modal.Footer></Modal.Footer>
       </Modal>
     </>
   );

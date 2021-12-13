@@ -109,21 +109,15 @@ function EditarTrabajador({ trabajador }) {
                   {errors.cuentaBancaria?.message}
                 </span>
               </div>
-              <div className="d-flex justify-content-start mx-1 pt-2">
+              <div className="d-flex justify-content-end mx-1 pt-2">
                 <button type="submit" className="btn btn-yellow btn-sm">
-                  Agregar
+                  Editar producto
                 </button>
               </div>
             </form>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <div className="d-flex w-100 justify-content-end">
-            <button className="btn-outline-gray" onClick={() => setShow(false)}>
-              Cerrar
-            </button>
-          </div>
-        </Modal.Footer>
+        <Modal.Footer></Modal.Footer>
       </Modal>
     </>
   );

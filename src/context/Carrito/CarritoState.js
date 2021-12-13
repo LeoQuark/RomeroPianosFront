@@ -8,7 +8,7 @@ export const CarritoState = (props) => {
   const initialState = {
     // selectPianos=[],
     // selectMuebles=[],
-    productos: [{ id: "", nombre: "", tipo: "", precio: "" }],
+    productos: [{ id: "", nombre: "", tipo: "", precio: "", cantidad: "" }],
   };
 
   const [carrito, dispatch] = useReducer(CarritoReducer, initialState);

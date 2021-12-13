@@ -22,8 +22,11 @@ export const obtenerTodos = async (producto) => {
   return get.data.data;
 };
 
-export const eliminarPorId = async (dato, producto, id) => {
-  console.log(dato, producto, id);
+export const eliminarPorId = async (producto, id) => {
+  const eliminar = await axios.delete(`${API_URL}/${producto}/delete/${id}`);
+  console.log(eliminar);
+  if (eliminar.status != 200) return "error";
+  return eliminar.data.msg;
 };
 
 export default {

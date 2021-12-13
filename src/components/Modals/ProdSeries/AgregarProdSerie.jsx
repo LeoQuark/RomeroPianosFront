@@ -96,20 +96,14 @@ function AgregarProdSerie() {
                 </div>
               </div>
             </div>
-            <div className="d-flex w-100 justify-content-between mt-4">
+            <div className="d-flex w-100 justify-content-end mt-4">
               <button type="submit" className="btn btn-yellow btn-sm">
                 Agregar
               </button>
             </div>
           </form>
         </Modal.Body>
-        <Modal.Footer>
-          {/* <div className="d-flex w-100 justify-content-end">
-            <button className="btn-outline-gray" onClick={() => setShow(false)}>
-              Cerrar
-            </button>
-          </div> */}
-        </Modal.Footer>
+        <Modal.Footer></Modal.Footer>
       </Modal>
     </>
   );

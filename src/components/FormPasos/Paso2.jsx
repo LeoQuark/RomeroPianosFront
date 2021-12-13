@@ -28,6 +28,7 @@ function Paso2() {
             <th scope="col">Nombre</th>
             <th scope="col">Tipo</th>
             <th scope="col">Precio</th>
+            <th scope="col">Cantidad</th>
             <th scope="col">Eliminar</th>
           </thead>
           <tbody>
@@ -46,6 +47,9 @@ function Paso2() {
                         {producto.tipo}
                       </td>
                       <td className="text-dark">{producto.precio}</td>
+                      <td className="text-dark text-capitalize">
+                        {producto.cantidad}
+                      </td>
                       <td>
                         <button
                           className="btn btn-sm btn-secondary"

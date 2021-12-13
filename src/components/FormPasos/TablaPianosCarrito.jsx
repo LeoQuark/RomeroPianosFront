@@ -33,7 +33,9 @@ const TablaPianosCarrito = ({ pianos, agregarProductos, carrito }) => {
                     className={
                       "btn btn-sm btn-yellow " + includes(piano.id_piano)
                     }
-                    onClick={(event) => agregarProductos(event, piano, "piano")}
+                    onClick={(event) =>
+                      agregarProductos(event, piano, "piano", 1)
+                    }
                   >
                     Agregar
                   </button>

@@ -33,7 +33,7 @@ const TablaMueblesCarrito = ({ muebles, agregarProductos, carrito }) => {
                       "btn btn-sm btn-yellow " + includes(mueble.id_mueble)
                     }
                     onClick={(event) =>
-                      agregarProductos(event, mueble, "mueble")
+                      agregarProductos(event, mueble, "mueble", 1)
                     }
                   >
                     Agregar

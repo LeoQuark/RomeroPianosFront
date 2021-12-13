@@ -43,7 +43,6 @@ function EditarPiano({ piano }) {
 
   const agregarDB = async (data) => {
     const put = await actualizarPorId(data, "piano", piano.id_piano);
-    // const update = await axios.put(`${API_URL}/piano/`)
     if (put != "error") {
       handleClose();
       history.push("/admin/inventario");
@@ -145,19 +144,19 @@ function EditarPiano({ piano }) {
                 </span>
               </div>
             </div>
-            <div className="d-flex w-100 justify-content-between mt-4">
+            <div className="d-flex w-100 justify-content-end mt-4">
               <button type="submit" className="btn btn-yellow btn-sm">
-                Agregar
+                Editar producto
               </button>
             </div>
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <div className="d-flex w-100 justify-content-end">
+          {/* <div className="d-flex w-100 justify-content-end">
             <button className="btn-outline-gray" onClick={handleClose}>
               Cerrar
             </button>
-          </div>
+          </div> */}
         </Modal.Footer>
       </Modal>
     </>

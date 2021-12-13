@@ -1,11 +1,7 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Tabs, Tab } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import API_URL from "../utils/api-data.js";
 import { obtenerTodos } from "../utils/peticiones.js";
 
-import Cargando from "../components/Cargando.jsx";
 import TablaPianos from "../components/Tablas/TablaPianos.jsx";
 import TablaMuebles from "../components/Tablas/TablaMuebles.jsx";
 import TablaProdSeries from "../components/Tablas/TablaProdSeries.jsx";
@@ -43,20 +39,6 @@ const Inventario = () => {
   }
 
   useEffect(() => {
-    // const obtenerProductos = async () => {
-    //   const [pianos, muebles, prod_serie] = await Promise.all([
-    //     consultaAxios("piano"),
-    //     consultaAxios("mueble"),
-    //     consultaAxios("producto"),
-    //   ]);
-    //   console.log(pianos, muebles, producto);
-    //   setDatosPiano(pianos);
-    //   setDatosMueble(muebles);
-    //   setDatosProducto(prod_serie);
-
-    //   setCargando(false);
-    // };
-    // obtenerProductos();
     obtenerProductos();
   }, [location]);
 

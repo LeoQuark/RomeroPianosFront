@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import CarritoContext from "../../context/Carrito/CarritoContext.js";
-import { setVentasLocalStorage } from "../../utils/Storage.js";
+
 import TablaPianosCarrito from "./TablaPianosCarrito.jsx";
 import TablaMueblesCarrito from "./TablaMueblesCarrito.jsx";
+import TablaProductosCarrito from "./TablaProductosCarrito.jsx";
 
 //primer paso para agregar una venta -- agregar productos pianos y/o muebles al carrito
-function Paso1({ pianos, muebles }) {
+function Paso1({ pianos, muebles, productos }) {
   //contexto del carrito y variables
   const { carrito, agregarProducto } = useContext(CarritoContext);
   const [tipo, setTipo] = useState("piano");
@@ -16,18 +17,21 @@ function Paso1({ pianos, muebles }) {
     setTipo(`${event.target.value}`);
   };
 
+  console.log(carrito);
   //agregar los productos seleccionados al estado carrito [objeto,objeto,objeto]
-  const agregarProductos = (event, producto, tipo) => {
+  const agregarProductos = (event, producto, tipo, cantidad) => {
     event.preventDefault();
+
     const productoSeleccionado = {
       id: `${producto[`id_${tipo}`]}`,
       nombre: producto.nombre,
-      tipo,
+      cantidad,
+      tipo: tipo === "prod_serie" ? "producto" : tipo,
       precio:
-        tipo === "piano"
+        tipo === "piano" || tipo === "prod_serie"
           ? producto.precio
           : tipo === "mueble"
-          ? producto.costo_dolar
+          ? producto.costo_final
           : "1000",
     };
     agregarProducto(productoSeleccionado);
@@ -49,6 +53,7 @@ function Paso1({ pianos, muebles }) {
         >
           <option value="piano">Pianos</option>
           <option value="mueble">Muebles</option>
+          <option value="producto">Productos en serie</option>
         </select>
       </div>
       <div>
@@ -58,14 +63,18 @@ function Paso1({ pianos, muebles }) {
             agregarProductos={agregarProductos}
             carrito={carrito}
           />
+        ) : tipo === "mueble" ? (
+          <TablaMueblesCarrito
+            muebles={muebles}
+            agregarProductos={agregarProductos}
+            carrito={carrito}
+          />
         ) : (
-          tipo === "mueble" && (
-            <TablaMueblesCarrito
-              muebles={muebles}
-              agregarProductos={agregarProductos}
-              carrito={carrito}
-            />
-          )
+          <TablaProductosCarrito
+            productos={productos}
+            agregarProductos={agregarProductos}
+            carrito={carrito}
+          />
         )}
       </div>
     </div>
