@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Tabs, Tab } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 import API_URL from "../utils/api-data.js";
+import { obtenerTodos } from "../utils/peticiones.js";
 
 import Cargando from "../components/Cargando.jsx";
 import TablaPianos from "../components/Tablas/TablaPianos.jsx";
@@ -10,6 +12,7 @@ import TablaProdSeries from "../components/Tablas/TablaProdSeries.jsx";
 
 const Inventario = () => {
   //variables y estados
+  const location = useLocation();
   const [cargando, setCargando] = useState(true);
   const [verPanel, setVerPanel] = useState("pianos");
   const [pianos, setPianos] = useState(false);
@@ -18,13 +21,15 @@ const Inventario = () => {
 
   //funciones
   const obtenerProductos = async () => {
-    const resPianos = await axios.get(`${API_URL}/piano/getAll`);
-    if (resPianos.status == 200) {
-      setPianos(resPianos.data.data);
-      setCargando(false);
-    } else {
-      console.log(resPianos);
-    }
+    const [pianosData, mueblesData, productosData] = await Promise.all([
+      obtenerTodos("piano"),
+      obtenerTodos("mueble"),
+      obtenerTodos("producto"),
+    ]);
+
+    setPianos(pianosData);
+    setMuebles(mueblesData);
+    setProdSerie(productosData);
   };
 
   function Paneles() {
@@ -38,8 +43,22 @@ const Inventario = () => {
   }
 
   useEffect(() => {
+    // const obtenerProductos = async () => {
+    //   const [pianos, muebles, prod_serie] = await Promise.all([
+    //     consultaAxios("piano"),
+    //     consultaAxios("mueble"),
+    //     consultaAxios("producto"),
+    //   ]);
+    //   console.log(pianos, muebles, producto);
+    //   setDatosPiano(pianos);
+    //   setDatosMueble(muebles);
+    //   setDatosProducto(prod_serie);
+
+    //   setCargando(false);
+    // };
+    // obtenerProductos();
     obtenerProductos();
-  }, []);
+  }, [location]);
 
   return (
     <div className="container-fluid">

@@ -1,15 +1,62 @@
 import React, { useEffect, useState } from "react";
 import { Card, Table } from "react-bootstrap";
+import { formatearFecha } from "../../utils/formatear.js";
 
 import AgregarMueble from "../Modals/Muebles/AgregarMueble.jsx";
-import EditarPiano from "../Modals/Pianos/EditarPiano.jsx";
+import EditarMueble from "../Modals/Muebles/EditarMueble.jsx";
 import EliminarProducto from "../Modals/EliminarProducto.jsx";
 import InfoProducto from "../Modals/InfoProducto.jsx";
 import Cargando from "../Cargando.jsx";
 
 function TablaMuebles({ muebles, cargando }) {
-  // const [cargando, setCargando] = useState(<Cargando />);
-  useEffect(() => {}, []);
+  const [btnFiltrar, setBtnFiltrar] = useState(false);
+  const [filtro, setFiltro] = useState("");
+  const [paginacion, setPaginacion] = useState(0);
+
+  //funcion para filtrar los datos por la paginacion y el filtro por el nombre
+  const filtrarDatos = () => {
+    if (filtro.length === 0) {
+      return muebles.slice(paginacion, paginacion + 5);
+    }
+    //si hay un nombre para filtrar
+    const productoFiltrado = muebles.filter((prod) => {
+      return prod.nombre.includes(filtro);
+    });
+    return productoFiltrado.slice(paginacion, paginacion + 5);
+  };
+
+  //funcion para abrir el apartado para ingresar el filtro (input)
+  const abrirInputFiltro = () => {
+    if (btnFiltrar == false) setBtnFiltrar(!btnFiltrar);
+    else {
+      setFiltro("");
+      setBtnFiltrar(!btnFiltrar);
+    }
+  };
+
+  //funciones para la paginacion
+  const siguiente = () => {
+    if (
+      muebles.filter((prod) => prod.nombre.includes(filtro)).length >
+      paginacion + 5
+    )
+      setPaginacion(paginacion + 5);
+  };
+
+  const atras = () => {
+    if (paginacion > 0) setPaginacion(paginacion - 5);
+  };
+
+  const filtrarNombre = (event) => {
+    setPaginacion(0);
+    setFiltro(event.target.value);
+  };
+
+  //funcion para enumerar correctamente las filas de la tabla
+  const numConsecutivos = (num) => {
+    if (paginacion === 0) return num;
+    else return paginacion + num;
+  };
 
   return (
     <Card className="strpied-tabled-with-hover">
@@ -28,14 +75,33 @@ function TablaMuebles({ muebles, cargando }) {
         </div>
       </Card.Header>
       <Card.Body className="table-full-width table-responsive px-0">
+        <div className="container-fluid px-3 py-2">
+          <div className="d-flex justify-content-start">
+            <button className="btn btn-sm btn-dark" onClick={abrirInputFiltro}>
+              Filtrar
+            </button>
+            {btnFiltrar && (
+              <div className="w-25 mx-2">
+                <input
+                  type="text"
+                  name="filtrar"
+                  className="form-control"
+                  placeholder="Filtrar por nombre"
+                  value={filtro}
+                  onChange={filtrarNombre}
+                />
+              </div>
+            )}
+          </div>
+        </div>
         <Table className="table-hover">
           <thead>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Nombre</th>
-              <th scope="col">Precio</th>
-              <th scope="col">Tipo</th>
-              <th scope="col">Marca</th>
+              <th scope="col">Costo dolar</th>
+              <th scope="col">Categoria</th>
+              <th scope="col">Origen</th>
               <th scope="col">Estado</th>
               <th scope="col">Fecha Ingreso</th>
               <th scope="col">Acciones</th>
@@ -43,26 +109,26 @@ function TablaMuebles({ muebles, cargando }) {
           </thead>
           <tbody>
             {muebles ? (
-              muebles.map((piano, key) => (
+              filtrarDatos().map((mueble, key) => (
                 <tr>
                   <td className="text-dark" scope="row">
-                    {key + 1}
+                    {numConsecutivos(key + 1)}
                   </td>
-                  <td className="text-dark">{piano.nombre}</td>
-                  <td className="text-dark">{piano.precio}</td>
-                  <td className="text-dark">{piano.tipo}</td>
-                  <td className="text-dark">{piano.marca}</td>
-                  <td className="text-dark">{piano.estado_piano}</td>
-                  <td className="text-dark">{piano.fecha}</td>
+                  <td className="text-dark">{mueble.nombre}</td>
+                  <td className="text-dark">{mueble.costo_dolar}</td>
+                  <td className="text-dark">{mueble.categoria}</td>
+                  <td className="text-dark">{mueble.origen}</td>
+                  <td className="text-dark">{mueble.estado_mueble}</td>
+                  <td className="text-dark">{formatearFecha(mueble.fecha)}</td>
                   <td className="text-dark">
                     <div className="d-flex justify-content-start justify-content-lg-between">
-                      <EditarPiano piano={piano} />
+                      <EditarMueble mueble={mueble} />
                       <EliminarProducto
-                        producto={piano}
-                        tipo="piano"
-                        nombre={piano.nombre}
+                        producto={mueble}
+                        tipo="mueble"
+                        nombre={mueble.nombre}
                       />
-                      <InfoProducto producto={piano} tipo="piano" />
+                      <InfoProducto producto={mueble} tipo="mueble" />
                     </div>
                   </td>
                 </tr>
@@ -74,6 +140,16 @@ function TablaMuebles({ muebles, cargando }) {
             )}
           </tbody>
         </Table>
+        <div className="container-fluid">
+          <div className="d-flex justify-content-center w-100">
+            <button className="btn btn-sm btn-dark mx-2" onClick={atras}>
+              Anterior
+            </button>
+            <button className="btn btn-sm btn-dark mx-2" onClick={siguiente}>
+              Siguiente
+            </button>
+          </div>
+        </div>
       </Card.Body>
     </Card>
   );

@@ -1,5 +1,5 @@
 //vistas de las secciones
-import Dashboard from "./views/Dashboard.js";
+import Dashboard from "./views/Dashboard.jsx";
 import RegistroVentas from "./views/RegistroVentas.jsx";
 import Inventario from "./views/Inventario.jsx";
 import Trabajadores from "./views/Trabajadores.jsx";

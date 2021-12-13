@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import API_URL from "../../../utils/api-data.js";
 
+import { agregarProducto } from "../../../utils/peticiones.js";
+
+//funciones (yup package) para validar los datos del formulario
 const messageError = "Este campo es obligatorio";
 const schema = yup
   .object({
@@ -17,6 +20,7 @@ const schema = yup
   .required();
 
 function AgregarPiano() {
+  //obtencion de los datos para validar formularios con yup y react-hook-form
   const {
     register,
     handleSubmit,
@@ -25,6 +29,7 @@ function AgregarPiano() {
     resolver: yupResolver(schema),
   });
 
+  const history = useHistory();
   const [show, setShow] = useState(false);
   const [datosPiano, setDatosPiano] = useState({});
 
@@ -36,9 +41,14 @@ function AgregarPiano() {
     setDatosPiano({ ...datosPiano, [event.target.name]: event.target.value });
   };
 
-  const agregarDB = () => {
-    console.log("agregar a base de datos");
-    console.log(datosPiano);
+  //agregar el producto a la base de datos
+  const agregarDB = async () => {
+    const crearPiano = await agregarProducto(datosPiano, "piano");
+    if (crearPiano === "error") {
+      console.log(crearPiano);
+    }
+    handleClose();
+    history.push("/admin/inventario");
   };
 
   return (

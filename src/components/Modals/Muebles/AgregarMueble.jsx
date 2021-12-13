@@ -1,8 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal } from "react-bootstrap";
-import API_URL from "../../../utils/api-data.js";
+import { useHistory } from "react-router-dom";
+import { Modal } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+import { agregarProducto } from "../../../utils/peticiones.js";
+
+//funciones (yup package) para validar los datos del formulario
+const messageError = "Este campo es obligatorio";
+const schema = yup
+  .object({
+    nombre: yup.string().required(messageError),
+    costoDolar: yup.number().typeError(messageError).required(messageError),
+    categoria: yup.string().required(messageError),
+    origen: yup.string().required(messageError),
+    estadoMueble: yup.string().required(messageError),
+  })
+  .required();
 
 function AgregarMueble() {
+  //obtencion de los datos para validar formularios con yup y react-hook-form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const history = useHistory();
   const [show, setShow] = useState(false);
   const [datosMueble, setDatosMueble] = useState({});
 
@@ -15,10 +42,15 @@ function AgregarMueble() {
     console.log(datosMueble);
   };
 
-  function agregarDB() {
-    console.log("agregar a base de datos");
-    console.log(datosMueble);
-  }
+  //agregar el producto a la base de datos
+  const agregarDB = async () => {
+    const crearMueble = await agregarProducto(datosMueble, "mueble");
+    if (crearMueble === "error") {
+      console.log(crearMueble);
+    }
+    handleClose();
+    history.push("/admin/inventario");
+  };
 
   return (
     <>
@@ -27,76 +59,103 @@ function AgregarMueble() {
       </button>
 
       <Modal show={show} onHide={handleClose}>
-        <form action="" onSubmit={agregarDB}>
-          <Modal.Header closeButton className="py-0">
-            <Modal.Title>Agrega un mueble</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="py-0">
+        <Modal.Header closeButton className="py-0">
+          <Modal.Title>Ingresa los datos del Mueble</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="py-0">
+          <form onSubmit={handleSubmit(agregarDB)}>
             <div>
-              <div className="mb-2">
-                <label htmlFor="">Nombre</label>
-                <input
-                  type="text"
-                  name="nombre"
-                  className="form-control"
-                  onChange={handleInput}
-                />
+              <div className="d-flex justify-content-between">
+                <div className="mb-2 w-100 mx-1">
+                  <label className="text-sm">Nombre</label>
+                  <input
+                    type="text"
+                    name="nombre"
+                    className="form-control"
+                    placeholder="Nombre del mueble"
+                    {...register("nombre")}
+                    onChange={handleInput}
+                  />
+                  <span className="text-danger text-xs">
+                    {errors.nombre?.message}
+                  </span>
+                </div>
+                <div className="mb-2 w-100 mx-1">
+                  <label className="text-sm">Costo dolar</label>
+                  <input
+                    name="costoDolar"
+                    type="number"
+                    className="form-control"
+                    placeholder="$$$"
+                    {...register("costoDolar")}
+                    onChange={handleInput}
+                  />
+                  <span className="text-danger text-xs">
+                    {errors.costoDolar?.message}
+                  </span>
+                </div>
+              </div>
+              <div className="d-flex justify-content-between">
+                <div className="mb-2 w-100 mx-1">
+                  <label className="text-sm">Categoria</label>
+                  <input
+                    name="categoria"
+                    type="text"
+                    className="form-control"
+                    placeholder="Categoria"
+                    {...register("categoria")}
+                    onChange={handleInput}
+                  />
+                  <span className="text-danger text-xs">
+                    {errors.categoria?.message}
+                  </span>
+                </div>
+                <div className="mb-2 w-100 mx-1">
+                  <label className="text-sm">Origen</label>
+                  <input
+                    name="origen"
+                    type="text"
+                    className="form-control"
+                    placeholder="Origen del piano"
+                    {...register("origen")}
+                    onChange={handleInput}
+                  />
+                  <span className="text-danger text-xs">
+                    {errors.origen?.message}
+                  </span>
+                </div>
               </div>
               <div className="mb-2">
-                <label htmlFor="">Precio</label>
-                <input
-                  name="precio"
-                  type="number"
-                  className="form-control"
+                <label className="text-sm">Estado</label>
+                <select
+                  name="estadoMueble"
+                  className="form-select form-select-sm"
+                  {...register("estadoMueble")}
                   onChange={handleInput}
-                />
-              </div>
-              <div className="mb-2">
-                <label htmlFor="">Tipo</label>
-                <input
-                  name="tipo"
-                  type="text"
-                  className="form-control"
-                  onChange={handleInput}
-                />
-              </div>
-              <div className="mb-2">
-                <label htmlFor="">Marca</label>
-                <input
-                  name="marca"
-                  type="text"
-                  className="form-control"
-                  onChange={handleInput}
-                />
-              </div>
-              <div className="mb-2">
-                <label htmlFor="">Estado</label>
-                <input
-                  name="estado_piano"
-                  type="text"
-                  className="form-control"
-                  onChange={handleInput}
-                />
-                {/* <select name="" id="" className="form-select">
+                >
+                  <option value="">-- Seleccione una opción --</option>
                   <option value="bodega">En bodega</option>
-                </select> */}
+                  <option value="reparacion">Reparación</option>
+                </select>
+                <span className="text-danger text-xs">
+                  {errors.estadoMueble?.message}
+                </span>
               </div>
             </div>
-          </Modal.Body>
-          <Modal.Footer>
             <div className="d-flex w-100 justify-content-between mt-4">
               <button type="submit" className="btn btn-yellow btn-sm">
                 Agregar
               </button>
-              <button
-                className="btn-outline-gray"
-                onClick={() => setShow(false)}
-              >
-                Cerrar
-              </button>
             </div>
-          </Modal.Footer>
-        </form>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          {/* <div className="d-flex w-100 justify-content-end">
+            <button className="btn-outline-gray" onClick={() => setShow(false)}>
+              Cerrar
+            </button>
+          </div> */}
+        </Modal.Footer>
       </Modal>
     </>
   );

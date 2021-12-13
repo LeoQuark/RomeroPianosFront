@@ -10,4 +10,14 @@ export const formatearFecha = (fecha) => {
   return `${horaFecha[1]} / ${vueltaFecha(horaFecha[0])}`;
 };
 
-export default formatearFecha;
+export const formatearPrecio = (precio) => {
+  const quitarSigno = precio.slice(1, precio.length);
+  const precioFinal = quitarSigno.replace(".", "");
+
+  return precioFinal;
+};
+
+export default {
+  formatearFecha,
+  formatearPrecio,
+};

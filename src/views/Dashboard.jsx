@@ -1,25 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ChartistGraph from "react-chartist";
 import Headers from "../components/Estadisticas/Headers.jsx";
 import GraficoLinea from "../components/Estadisticas/GraficoLinea.jsx";
 import GraficoTorta from "../components/Estadisticas/GraficoTorta.jsx";
-// react-bootstrap components
-import {
-  Badge,
-  Button,
-  Card,
-  Navbar,
-  Nav,
-  Table,
-  Container,
-  Row,
-  Col,
-  Form,
-  OverlayTrigger,
-  Tooltip,
-} from "react-bootstrap";
 
-function Dashboard() {
+import axios from "axios";
+import { API_URL } from "../utils/api-data.js";
+
+// react-bootstrap components
+import { Card, Container, Row, Col } from "react-bootstrap";
+
+const Dashboard = () => {
+  const [estadistica, setEstadistica] = useState();
+
+  useEffect(() => {
+    const obtenerEstadistica = async () => {
+      const res = await axios.get(`${API_URL}/estadistica/getAll`);
+      console.log(res);
+    };
+    obtenerEstadistica();
+  });
+
   return (
     <>
       <Container fluid>
@@ -450,6 +451,6 @@ function Dashboard() {
       </Container>
     </>
   );
-}
+};
 
 export default Dashboard;

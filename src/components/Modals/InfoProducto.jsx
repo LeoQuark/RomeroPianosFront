@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import API_URL from "../../utils/api-data.js";
-import { formatearFecha } from "../../utils/fecha.js";
+import { formatearFecha } from "../../utils/formatear.js";
 
 function InfoProducto({ producto, tipo, nombre }) {
   const [show, setShow] = useState(false);
@@ -33,9 +33,13 @@ function InfoProducto({ producto, tipo, nombre }) {
                   (dato, key) =>
                     dato != `id_${tipo}` && (
                       <tr>
+                        {/* primera columna para mostrar los atributos de la tabla */}
                         <td>{dato}</td>
+                        {/* segunda columna muestra los valores de la tabla */}
                         {dato === "fecha" ? (
                           <td>{formatearFecha(producto[`${dato}`])}</td>
+                        ) : dato === "id_venta" ? (
+                          <td>{"No se que hacer aqui"}</td>
                         ) : (
                           <td>{producto[`${dato}`]}</td>
                         )}

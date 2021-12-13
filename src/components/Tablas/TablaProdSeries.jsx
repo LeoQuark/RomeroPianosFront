@@ -1,15 +1,63 @@
 import React, { useEffect, useState } from "react";
 import { Card, Table } from "react-bootstrap";
+import { formatearFecha } from "../../utils/formatear.js";
 
 import AgregarProdSerie from "../Modals/ProdSeries/AgregarProdSerie.jsx";
-import EditarPiano from "../Modals/Pianos/EditarPiano.jsx";
+import EditarProdSerie from "../Modals/ProdSeries/EditarProdSerie.jsx";
 import EliminarProducto from "../Modals/EliminarProducto.jsx";
 import InfoProducto from "../Modals/InfoProducto.jsx";
 import Cargando from "../Cargando.jsx";
 
+//Componente que muestra la tabla del inventario de pianos
 function TablaProdSeries({ prod_serie, cargando }) {
-  // const [cargando, setCargando] = useState(<Cargando />);
-  useEffect(() => {}, []);
+  const [btnFiltrar, setBtnFiltrar] = useState(false);
+  const [filtro, setFiltro] = useState("");
+  const [paginacion, setPaginacion] = useState(0);
+  // console.log(pianos);
+  //funcion para filtrar los datos por la paginacion y el filtro por el nombre
+  const filtrarDatos = () => {
+    if (filtro.length === 0) {
+      return prod_serie.slice(paginacion, paginacion + 5);
+    }
+    //si hay un nombre para filtrar
+    const productoFiltrado = prod_serie.filter((prod) => {
+      return prod.nombre.includes(filtro);
+    });
+    return productoFiltrado.slice(paginacion, paginacion + 5);
+  };
+
+  //funcion para abrir el apartado para ingresar el filtro (input)
+  const abrirInputFiltro = () => {
+    if (btnFiltrar == false) setBtnFiltrar(!btnFiltrar);
+    else {
+      setFiltro("");
+      setBtnFiltrar(!btnFiltrar);
+    }
+  };
+
+  //funciones para la paginacion
+  const siguiente = () => {
+    if (
+      prod_serie.filter((prod) => prod.nombre.includes(filtro)).length >
+      paginacion + 5
+    )
+      setPaginacion(paginacion + 5);
+  };
+
+  const atras = () => {
+    if (paginacion > 0) setPaginacion(paginacion - 5);
+  };
+
+  const filtrarNombre = (event) => {
+    setPaginacion(0);
+    setFiltro(event.target.value);
+  };
+
+  //funcion para enumerar correctamente las filas de la tabla
+  const numConsecutivos = (num) => {
+    if (paginacion === 0) return num;
+    else return paginacion + num;
+  };
 
   return (
     <Card className="strpied-tabled-with-hover">
@@ -28,52 +76,77 @@ function TablaProdSeries({ prod_serie, cargando }) {
         </div>
       </Card.Header>
       <Card.Body className="table-full-width table-responsive px-0">
+        <div className="container-fluid px-3 py-2">
+          <div className="d-flex justify-content-start">
+            <button className="btn btn-sm btn-dark" onClick={abrirInputFiltro}>
+              Filtrar
+            </button>
+            {btnFiltrar && (
+              <div className="w-25 mx-2">
+                <input
+                  type="text"
+                  name="filtrar"
+                  className="form-control"
+                  placeholder="Filtrar por nombre"
+                  value={filtro}
+                  onChange={filtrarNombre}
+                />
+              </div>
+            )}
+          </div>
+        </div>
         <Table className="table-hover">
           <thead>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Nombre</th>
-              <th scope="col">Precio</th>
-              <th scope="col">Tipo</th>
-              <th scope="col">Marca</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Fecha Ingreso</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Fecha Registro</th>
+              <th scope="col">Fecha Modificación</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
             {prod_serie ? (
-              prod_serie.map((piano, key) => (
+              filtrarDatos().map((producto, key) => (
                 <tr>
-                  <td className="text-dark" scope="row">
-                    {key + 1}
+                  <td className="text-dark">{numConsecutivos(key + 1)}</td>
+                  <td className="text-dark">{producto.nombre}</td>
+                  <td className="text-dark">{producto.stock}</td>
+                  <td className="text-dark">
+                    {formatearFecha(producto.fecha_registro)}
                   </td>
-                  <td className="text-dark">{piano.nombre}</td>
-                  <td className="text-dark">{piano.precio}</td>
-                  <td className="text-dark">{piano.tipo}</td>
-                  <td className="text-dark">{piano.marca}</td>
-                  <td className="text-dark">{piano.estado_piano}</td>
-                  <td className="text-dark">{piano.fecha}</td>
+                  <td className="text-dark">
+                    {formatearFecha(producto.fecha_modificacion)}
+                  </td>
                   <td className="text-dark">
                     <div className="d-flex justify-content-start justify-content-lg-between">
-                      <EditarPiano piano={piano} />
+                      <EditarProdSerie producto={producto} />
                       <EliminarProducto
-                        producto={piano}
-                        tipo="piano"
-                        nombre={piano.nombre}
+                        producto={producto}
+                        tipo="prod_serie"
+                        nombre={producto.nombre}
                       />
-                      <InfoProducto producto={piano} tipo="piano" />
+                      <InfoProducto producto={producto} tipo="prod_serie" />
                     </div>
                   </td>
                 </tr>
               ))
             ) : (
-              <tr style={{ borderBottom: "1px solid white" }}>
-                {cargando ? <Cargando /> : <td>No hay productos</td>}
-              </tr>
+              <div>{cargando ? <Cargando /> : "No hay productos"}</div>
             )}
           </tbody>
         </Table>
+        <div className="container-fluid">
+          <div className="d-flex justify-content-center w-100">
+            <button className="btn btn-sm btn-dark mx-2" onClick={atras}>
+              Anterior
+            </button>
+            <button className="btn btn-sm btn-dark mx-2" onClick={siguiente}>
+              Siguiente
+            </button>
+          </div>
+        </div>
       </Card.Body>
     </Card>
   );

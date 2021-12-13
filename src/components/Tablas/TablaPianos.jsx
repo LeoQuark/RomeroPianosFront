@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Table } from "react-bootstrap";
-import { formatearFecha } from "../../utils/fecha.js";
+import { formatearFecha } from "../../utils/formatear.js";
 
 import AgregarPiano from "../Modals/Pianos/AgregarPiano.jsx";
 import EditarPiano from "../Modals/Pianos/EditarPiano.jsx";
@@ -8,11 +8,13 @@ import EliminarProducto from "../Modals/EliminarProducto.jsx";
 import InfoProducto from "../Modals/InfoProducto.jsx";
 import Cargando from "../Cargando.jsx";
 
+//Componente que muestra la tabla del inventario de pianos
 function TablaPianos({ pianos, cargando }) {
   const [btnFiltrar, setBtnFiltrar] = useState(false);
   const [filtro, setFiltro] = useState("");
   const [paginacion, setPaginacion] = useState(0);
-
+  // console.log(pianos);
+  //funcion para filtrar los datos por la paginacion y el filtro por el nombre
   const filtrarDatos = () => {
     if (filtro.length === 0) {
       return pianos.slice(paginacion, paginacion + 5);
@@ -23,12 +25,11 @@ function TablaPianos({ pianos, cargando }) {
     });
     return productoFiltrado.slice(paginacion, paginacion + 5);
   };
-  console.log("ahora", filtro);
+
+  //funcion para abrir el apartado para ingresar el filtro (input)
   const abrirInputFiltro = () => {
-    console.log(btnFiltrar);
-    if (btnFiltrar == false) {
-      setBtnFiltrar(!btnFiltrar);
-    } else {
+    if (btnFiltrar == false) setBtnFiltrar(!btnFiltrar);
+    else {
       setFiltro("");
       setBtnFiltrar(!btnFiltrar);
     }
@@ -42,6 +43,7 @@ function TablaPianos({ pianos, cargando }) {
     )
       setPaginacion(paginacion + 5);
   };
+
   const atras = () => {
     if (paginacion > 0) setPaginacion(paginacion - 5);
   };
@@ -51,6 +53,7 @@ function TablaPianos({ pianos, cargando }) {
     setFiltro(event.target.value);
   };
 
+  //funcion para enumerar correctamente las filas de la tabla
   const numConsecutivos = (num) => {
     if (paginacion === 0) return num;
     else return paginacion + num;

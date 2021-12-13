@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
+
 import axios from "axios";
 import { API_URL } from "../utils/api-data.js";
 
