@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 
-import InfoProducto from "../Modals/InfoProducto.jsx";
-import EditarTrabajador from "../Modals/Trabajadores/EditarTrabajador.jsx";
-import EliminarProducto from "../Modals/EliminarProducto.jsx";
+import { formatearFecha } from "../../utils/formatear.js";
+import InfoVentas from "../Modals/Ventas/InfoVentas.jsx";
+// import EditarTrabajador from "../Modals/Trabajadores/EditarTrabajador.jsx";
+// import EliminarProducto from "../Modals/EliminarProducto.jsx";
 import Cargando from "../Cargando.jsx";
 
-function TablaTrabajadores({ trabajadores, cargando }) {
+function TablaVentas({ ventas, cargando }) {
   const [btnFiltrar, setBtnFiltrar] = useState(false);
   const [filtro, setFiltro] = useState("");
   const [paginacion, setPaginacion] = useState(0);
-  // console.log(pianos);
   //funcion para filtrar los datos por la paginacion y el filtro por el nombre
   const filtrarDatos = () => {
     if (filtro.length === 0) {
-      return trabajadores.slice(paginacion, paginacion + 5);
+      return ventas.slice(paginacion, paginacion + 5);
     }
     //si hay un nombre para filtrar
-    const productoFiltrado = trabajadores.filter((prod) => {
+    const productoFiltrado = ventas.filter((prod) => {
       return prod.nombre.includes(filtro);
     });
     return productoFiltrado.slice(paginacion, paginacion + 5);
@@ -35,7 +35,7 @@ function TablaTrabajadores({ trabajadores, cargando }) {
   //funciones para la paginacion
   const siguiente = () => {
     if (
-      trabajadores.filter((prod) => prod.nombre.includes(filtro)).length >
+      ventas.filter((prod) => prod.nombre.includes(filtro)).length >
       paginacion + 5
     )
       setPaginacion(paginacion + 5);
@@ -55,12 +55,13 @@ function TablaTrabajadores({ trabajadores, cargando }) {
     if (paginacion === 0) return num;
     else return paginacion + num;
   };
+
   return (
     <div>
       <div className="container-fluid px-3 py-2">
         <div className="d-flex justify-content-start">
           <button className="btn btn-sm btn-dark" onClick={abrirInputFiltro}>
-            Filtrar
+            Filtrar por Fecha
           </button>
           {btnFiltrar && (
             <div className="w-25 mx-2">
@@ -68,7 +69,7 @@ function TablaTrabajadores({ trabajadores, cargando }) {
                 type="text"
                 name="filtrar"
                 className="form-control"
-                placeholder="Filtrar por nombre"
+                placeholder="Filtrar por fecha"
                 value={filtro}
                 onChange={filtrarNombre}
               />
@@ -80,36 +81,39 @@ function TablaTrabajadores({ trabajadores, cargando }) {
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Correo</th>
-            <th scope="col">Teléfono</th>
+            <th scope="col">Precio Total</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Dirección Despacho</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {trabajadores ? (
-            filtrarDatos().map((trabajador, index) => (
+          {ventas ? (
+            filtrarDatos().map((venta, index) => (
               <tr>
                 <td className="text-dark" scope="row" key={index}>
                   {index + 1}
                 </td>
-                <td className="text-dark">{trabajador.nombre}</td>
-                <td className="text-dark">{trabajador.correo}</td>
-                <td className="text-dark">{trabajador.telefono}</td>
+                <td className="text-dark">{venta.precio_total}</td>
+                <td className="text-dark">{formatearFecha(venta.fecha)}</td>
+                <td className="text-dark">{venta.direccion_despacho}</td>
                 <td className="text-dark">
                   <div className="d-flex justify-content-start">
                     <div className="mx-1">
+                      <InfoVentas />
+                    </div>
+                    {/* <div className="mx-1">
                       <EditarTrabajador trabajador={trabajador} className="" />
                     </div>
                     <div className="mx-1">
                       <EliminarProducto
-                        producto={trabajador}
-                        tipo="trabajador"
-                        nombre={trabajador.nombre}
+                        producto={venta}
+                        tipo="venta"
+                        nombre={venta.nombre}
                       />
-                    </div>
+                    </div> */}
                     <div className="mx-1">
-                      <InfoProducto producto={trabajador} tipo="trabajador" />
+                      {/* <InfoProducto producto={trabajador} tipo="trabajador" /> */}
                     </div>
                   </div>
                 </td>
@@ -134,4 +138,4 @@ function TablaTrabajadores({ trabajadores, cargando }) {
   );
 }
 
-export default TablaTrabajadores;
+export default TablaVentas;

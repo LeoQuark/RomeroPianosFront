@@ -17,11 +17,9 @@ function Paso1({ pianos, muebles, productos }) {
     setTipo(`${event.target.value}`);
   };
 
-  console.log(carrito);
   //agregar los productos seleccionados al estado carrito [objeto,objeto,objeto]
   const agregarProductos = (event, producto, tipo, cantidad) => {
     event.preventDefault();
-
     const productoSeleccionado = {
       id: `${producto[`id_${tipo}`]}`,
       nombre: producto.nombre,
@@ -34,7 +32,9 @@ function Paso1({ pianos, muebles, productos }) {
           ? producto.costo_final
           : "1000",
     };
+    console.log(productoSeleccionado);
     agregarProducto(productoSeleccionado);
+    // setCarrito(productoSeleccionado);
   };
 
   useEffect(() => {}, [carrito]);

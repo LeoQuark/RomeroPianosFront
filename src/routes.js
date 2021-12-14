@@ -41,6 +41,13 @@ const dashboardRoutes = [
     component: Importaciones,
     layout: "/admin",
   },
+  {
+    path: "/registro-gastos",
+    name: "Importaciones",
+    icon: "fas fa-calculator",
+    component: Importaciones,
+    layout: "/admin",
+  },
 ];
 
 export default dashboardRoutes;

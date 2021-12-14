@@ -99,7 +99,7 @@ function TablaMuebles({ muebles, cargando }) {
             <tr>
               <th scope="col">#</th>
               <th scope="col">Nombre</th>
-              <th scope="col">Costo dolar</th>
+              <th scope="col">Costo Final</th>
               <th scope="col">Categoria</th>
               <th scope="col">Origen</th>
               <th scope="col">Estado</th>
@@ -115,7 +115,7 @@ function TablaMuebles({ muebles, cargando }) {
                     {numConsecutivos(key + 1)}
                   </td>
                   <td className="text-dark">{mueble.nombre}</td>
-                  <td className="text-dark">{mueble.costo_dolar}</td>
+                  <td className="text-dark">{mueble.costo_final}</td>
                   <td className="text-dark">{mueble.categoria}</td>
                   <td className="text-dark">{mueble.origen}</td>
                   <td className="text-dark">{mueble.estado_mueble}</td>

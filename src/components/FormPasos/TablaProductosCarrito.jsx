@@ -4,10 +4,8 @@ import FilasProducto from "./FilasProducto.jsx";
 
 const TablaPianosCarrito = ({ productos, agregarProductos, carrito }) => {
   const includes = (idProducto) => {
-    let isDisabled = carrito.productos.some(
-      (producto) => producto.id === idProducto
-    );
-    return isDisabled ? " disabled" : " ";
+    let isDisabled = idProducto === carrito.id ? "disabled" : " ";
+    return isDisabled;
   };
 
   return (

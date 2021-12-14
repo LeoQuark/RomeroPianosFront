@@ -98,7 +98,7 @@ function TablaPianos({ pianos, cargando }) {
         <Table className="table-hover">
           <thead>
             <tr>
-              <th scope="col">#</th>
+              {/* <th scope="col">#</th> */}
               <th scope="col">Nombre</th>
               <th scope="col">Precio</th>
               <th scope="col">Tipo</th>

@@ -1,14 +1,40 @@
 import React, { useState, useEffect, useContext } from "react";
 import CarritoContext from "../../context/Carrito/CarritoContext.js";
 import UsuarioContext from "../../context/Usuario/UsuarioContext.js";
-import { getVentasLocalStorage } from "../../utils/Storage.js";
-import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+import { agregarProducto } from "../../utils/peticiones.js";
+
+//funciones (yup package) para validar los datos del formulario
+const messageError = "Este campo es obligatorio";
+const schema = yup
+  .object({
+    //cliente
+    nombre: yup.string().required(messageError),
+    telefono: yup.number().typeError(messageError).required(messageError),
+    correo: yup.string().required(messageError),
+    direccionDespacho: yup.string().required(messageError),
+  })
+  .required();
 
 //segundo paso para agregar una venta -- resumen del carrito
-function Paso3() {
+function Paso3({ handleClose }) {
+  //obtencion de los datos para validar formularios con yup y react-hook-form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const history = useHistory();
   //useContext del carrito de ventas
   const { usuario } = useContext(UsuarioContext);
-  const { carrito, eliminarProducto } = useContext(CarritoContext);
+  const { carrito, limpiarCarro } = useContext(CarritoContext);
   const [datosCliente, setDatosCliente] = useState({});
 
   const handleInput = (event) => {
@@ -19,83 +45,96 @@ function Paso3() {
     });
   };
 
-  const obtenerPrecioTotal = () => {
-    let precioTotal;
-
-    // console.log("carrito", carrito);
-    carrito.productos.map((producto) => {
-      //   console.log("prod", producto);
-      precioTotal = precioTotal + producto.precio;
-    });
-    console.log(precioTotal);
-    return precioTotal;
-  };
-
-  const submitVenta = (event) => {
-    event.preventDefault();
-    const eliminarPrimerDato = carrito.productos.shift();
-    const precioTotal = obtenerPrecioTotal();
-    console.log(precioTotal);
+  const submitVenta = async (data) => {
+    // se crea el objeto que se enviará al backend
     const datosSubmit = {
-      ...datosCliente,
-      ...carrito,
+      ...data,
+      producto: carrito,
       idUsuario: usuario.id_usuario,
     };
-    // console.log("usuario id", usuario);
-    console.log(datosSubmit);
+
+    const post = await agregarProducto(datosSubmit, "venta");
+    if (post != "error") {
+      handleClose();
+      limpiarCarro(carrito);
+      console.log(datosSubmit);
+      history.push("/admin/registro-ventas");
+    }
   };
 
   return (
     <div>
-      <div>Paso 3: Datos del cliente</div>
+      <div className="mx-1">Paso 3: Datos Cliente</div>
       <div className="my-2">
-        <form onSubmit={submitVenta}>
-          <div className="d-flex w-100 justify-content-between">
-            <div className="mb-2 w-100 mx-1">
-              <label className="text-sm">Nombre</label>
+        <form onSubmit={handleSubmit(submitVenta)}>
+          <div>
+            <div className="d-flex w-100 justify-content-between">
+              <div className="mb-2 w-100 mx-1">
+                <label className="text-sm">Nombre</label>
+                <input
+                  type="text"
+                  name="nombre"
+                  className="form-control form-control-sm"
+                  placeholder="Nombre del cliente"
+                  onChange={handleInput}
+                  {...register("nombre")}
+                />
+                <span className="text-danger text-xs">
+                  {errors.nombre?.message}
+                </span>
+              </div>
+              <div className="mb-2 w-100 mx-1">
+                <label className="text-sm">Teléfono</label>
+                <input
+                  type="number"
+                  name="telefono"
+                  className="form-control form-control-sm"
+                  placeholder="9 1234 5678"
+                  onChange={handleInput}
+                  {...register("telefono")}
+                />
+                <span className="text-danger text-xs">
+                  {errors.telefono?.message}
+                </span>
+              </div>
+            </div>
+            <div className="mb-2 mx-1">
+              <label className="text-sm">Correo</label>
               <input
                 type="text"
-                name="nombre"
+                name="correo"
                 className="form-control form-control-sm"
-                placeholder="Nombre del cliente"
+                placeholder="cliente@gmail.com"
                 onChange={handleInput}
+                {...register("correo")}
               />
+              <span className="text-danger text-xs">
+                {errors.correo?.message}
+              </span>
             </div>
-            <div className="mb-2 w-100 mx-1">
-              <label className="text-sm">Teléfono</label>
+            <div className="mb-2 mx-1">
+              <label className="text-sm">Dirección</label>
               <input
-                type="number"
-                name="telefono"
+                type="text"
+                name="direccionDespacho"
                 className="form-control form-control-sm"
-                placeholder="9 1234 5678"
+                placeholder="Dirección despacho"
                 onChange={handleInput}
+                {...register("direccionDespacho")}
               />
+              <span className="text-danger text-xs">
+                {errors.direccionDespacho?.message}
+              </span>
             </div>
-          </div>
-          <div className="mb-2 mx-1">
-            <label className="text-sm">Correo</label>
-            <input
-              type="text"
-              name="correo"
-              className="form-control form-control-sm"
-              placeholder="cliente@gmail.com"
-              onChange={handleInput}
-            />
-          </div>
-          <div className="mb-2 mx-1">
-            <label className="text-sm">Dirección</label>
-            <input
-              type="text"
-              name="direccionPersonal"
-              className="form-control form-control-sm"
-              placeholder="Dirección personal"
-              onChange={handleInput}
-            />
           </div>
           <div className="d-flex justify-content-end my-2">
-            <button type="submit" className="btn btn-yellow btn-sm">
-              Terminar venta
-            </button>
+            {carrito.id != "" ? (
+              <button type="submit" className="btn btn-yellow btn-sm">
+                Terminar venta
+              </button>
+            ) : (
+              <div className="btn btn-danger btn-sm">Ingrese un producto</div>
+            )}
           </div>
         </form>
       </div>

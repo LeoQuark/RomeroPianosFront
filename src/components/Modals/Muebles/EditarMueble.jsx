@@ -12,7 +12,7 @@ const messageError = "Este campo es obligatorio";
 const schema = yup
   .object({
     nombre: yup.string().required(messageError),
-    costoDolar: yup.number().typeError(messageError).required(messageError),
+    costoFinal: yup.number().typeError(messageError).required(messageError),
     categoria: yup.string().required(messageError),
     origen: yup.string().required(messageError),
     estadoMueble: yup.string().required(messageError),
@@ -30,15 +30,9 @@ function EditarMueble({ mueble }) {
   });
   const history = useHistory();
   const [show, setShow] = useState(false);
-  const [datosMueble, setDatosMueble] = useState({});
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const handleInput = (event) => {
-    event.preventDefault();
-    setDatosMueble({ ...datosMueble, [event.target.name]: event.target.value });
-  };
 
   const agregarDB = async (data) => {
     const put = await actualizarPorId(data, "mueble", mueble.id_mueble);
@@ -74,24 +68,22 @@ function EditarMueble({ mueble }) {
                     className="form-control"
                     defaultValue={mueble.nombre}
                     {...register("nombre")}
-                    onChange={handleInput}
                   />
                   <span className="text-danger text-xs">
                     {errors.nombre?.message}
                   </span>
                 </div>
                 <div className="mb-2 w-100 mx-1">
-                  <label className="text-sm">Costo dolar</label>
+                  <label className="text-sm">Costo Final</label>
                   <input
-                    name="costoDolar"
+                    name="costoFinal"
                     type="text"
                     className="form-control"
-                    defaultValue={formatearPrecio(mueble.costo_dolar)}
-                    {...register("costoDolar")}
-                    onChange={handleInput}
+                    defaultValue={formatearPrecio(mueble.costo_final)}
+                    {...register("costoFinal")}
                   />
                   <span className="text-danger text-xs">
-                    {errors.costoDolar?.message}
+                    {errors.costoFinal?.message}
                   </span>
                 </div>
               </div>
@@ -104,10 +96,9 @@ function EditarMueble({ mueble }) {
                     className="form-control"
                     defaultValue={mueble.categoria}
                     {...register("categoria")}
-                    onChange={handleInput}
                   />
                   <span className="text-danger text-xs">
-                    {errors.mueble?.message}
+                    {errors.categoria?.message}
                   </span>
                 </div>
                 <div className="mb-2 w-100 mx-1">
@@ -118,7 +109,6 @@ function EditarMueble({ mueble }) {
                     className="form-control"
                     defaultValue={mueble.origen}
                     {...register("origen")}
-                    onChange={handleInput}
                   />
                   <span className="text-danger text-xs">
                     {errors.origen?.message}
@@ -131,7 +121,6 @@ function EditarMueble({ mueble }) {
                   name="estadoMueble"
                   className="form-select form-select-sm"
                   {...register("estadoMueble")}
-                  onChange={handleInput}
                   defaultValue={mueble.estado_mueble}
                 >
                   <option value="">-- Seleccione una opción --</option>

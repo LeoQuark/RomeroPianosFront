@@ -62,7 +62,7 @@ function AgregarVenta() {
         />
       );
     else if (paso === 2) return <Paso2 />;
-    else if (paso === 3) return <Paso3 />;
+    else if (paso === 3) return <Paso3 handleClose={handleClose} />;
   }
 
   return (

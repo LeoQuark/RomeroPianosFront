@@ -3,10 +3,8 @@ import React, { useState } from "react";
 const FilasProducto = ({ index, producto, agregarProductos, carrito }) => {
   const [cantidad, setCantidad] = useState(1);
   const includes = (idProducto) => {
-    let isDisabled = carrito.productos.some(
-      (producto) => producto.id === idProducto
-    );
-    return isDisabled ? " disabled" : " ";
+    let isDisabled = idProducto === carrito.id ? "disabled" : " ";
+    return isDisabled;
   };
 
   const menos = (event) => {

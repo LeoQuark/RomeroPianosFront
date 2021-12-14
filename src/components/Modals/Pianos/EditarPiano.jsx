@@ -31,15 +31,9 @@ function EditarPiano({ piano }) {
   });
   const history = useHistory();
   const [show, setShow] = useState(false);
-  const [datosPiano, setDatosPiano] = useState({});
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const handleInput = (event) => {
-    event.preventDefault();
-    setDatosPiano({ ...datosPiano, [event.target.name]: event.target.value });
-  };
 
   const agregarDB = async (data) => {
     const put = await actualizarPorId(data, "piano", piano.id_piano);
@@ -75,7 +69,6 @@ function EditarPiano({ piano }) {
                     className="form-control"
                     defaultValue={piano.nombre}
                     {...register("nombre")}
-                    onChange={handleInput}
                   />
                   <span className="text-danger text-xs">
                     {errors.nombre?.message}
@@ -89,7 +82,6 @@ function EditarPiano({ piano }) {
                     className="form-control"
                     defaultValue={formatearPrecio(piano.precio)}
                     {...register("precio")}
-                    onChange={handleInput}
                   />
                   <span className="text-danger text-xs">
                     {errors.precio?.message}
@@ -105,7 +97,6 @@ function EditarPiano({ piano }) {
                     className="form-control"
                     defaultValue={piano.tipo}
                     {...register("tipo")}
-                    onChange={handleInput}
                   />
                   <span className="text-danger text-xs">
                     {errors.tipo?.message}
@@ -119,7 +110,6 @@ function EditarPiano({ piano }) {
                     className="form-control"
                     defaultValue={piano.marca}
                     {...register("marca")}
-                    onChange={handleInput}
                   />
                   <span className="text-danger text-xs">
                     {errors.marca?.message}
@@ -132,7 +122,6 @@ function EditarPiano({ piano }) {
                   name="estadoPiano"
                   className="form-select form-select-sm"
                   {...register("estadoPiano")}
-                  onChange={handleInput}
                   defaultValue={piano.estado_piano}
                 >
                   <option value="">-- Seleccione una opción --</option>

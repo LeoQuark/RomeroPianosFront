@@ -20,7 +20,11 @@ function EliminarProducto({ producto, tipo, nombre }) {
     );
     if (eliminarProducto != "error") {
       handleClose();
-      history.push("/admin/inventario");
+      if (tipo === "trabajador") {
+        history.push("/admin/trabajadores");
+      } else {
+        history.push("/admin/inventario");
+      }
     }
   };
 

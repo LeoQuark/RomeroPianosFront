@@ -6,9 +6,11 @@ import { types } from "./types.js";
 //Creación del estado global Carrito, donde se hará uso de useContext y useReducer.
 export const CarritoState = (props) => {
   const initialState = {
-    // selectPianos=[],
-    // selectMuebles=[],
-    productos: [{ id: "", nombre: "", tipo: "", precio: "", cantidad: "" }],
+    id: "",
+    nombre: "",
+    tipo: "",
+    precio: "",
+    cantidad: "",
   };
 
   const [carrito, dispatch] = useReducer(CarritoReducer, initialState);
@@ -16,13 +18,6 @@ export const CarritoState = (props) => {
   const agregarProducto = (dato) => {
     dispatch({
       type: types.ADD_TO_CART,
-      payload: dato,
-    });
-  };
-
-  const eliminarProducto = (dato) => {
-    dispatch({
-      type: types.REMOVE_ONE_FROM_CART,
       payload: dato,
     });
   };
@@ -40,7 +35,7 @@ export const CarritoState = (props) => {
       value={{
         carrito,
         agregarProducto,
-        eliminarProducto,
+        limpiarCarro,
       }}
     >
       {props.children}

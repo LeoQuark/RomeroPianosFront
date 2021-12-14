@@ -14,6 +14,7 @@ const schema = yup
   .object({
     nombre: yup.string().required(messageError),
     stock: yup.number().typeError(messageError).required(messageError),
+    precio: yup.number().typeError(messageError).required(messageError),
   })
   .required();
 
@@ -92,6 +93,22 @@ function EditarProdSerie({ producto }) {
                 />
                 <span className="text-danger text-xs">
                   {errors.stock?.message}
+                </span>
+              </div>
+            </div>
+            <div className="d-flex justify-content-between">
+              <div className="mb-2 w-100 mx-1">
+                <label className="text-sm">Precio</label>
+                <input
+                  type="number"
+                  name="precio"
+                  className="form-control"
+                  defaultValue={formatearPrecio(producto.precio)}
+                  {...register("precio")}
+                  onChange={handleInput}
+                />
+                <span className="text-danger text-xs">
+                  {errors.precio?.message}
                 </span>
               </div>
             </div>

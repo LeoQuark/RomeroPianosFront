@@ -36,7 +36,9 @@ function InfoProducto({ producto, tipo, nombre }) {
                         {/* primera columna para mostrar los atributos de la tabla */}
                         <td>{dato}</td>
                         {/* segunda columna muestra los valores de la tabla */}
-                        {dato === "fecha" ? (
+                        {dato === "fecha" ||
+                        dato === "fecha_registro" ||
+                        dato === "fecha_modificacion" ? (
                           <td>{formatearFecha(producto[`${dato}`])}</td>
                         ) : dato === "id_venta" ? (
                           <td>{"No se que hacer aqui"}</td>

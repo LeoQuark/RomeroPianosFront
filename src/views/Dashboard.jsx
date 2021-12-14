@@ -26,16 +26,17 @@ const Dashboard = () => {
       <Container fluid>
         <Row>
           <Headers
-            titulo="Titulo"
+            titulo="Ventas del mes"
             dato="$100.000"
-            icon="fas fa-dollar-sign"
-            iconColor="text-danger"
+            icon="fas fa-cart-plus fa-sm"
+            iconColor="text-success"
             subtitulo="subtitulo"
             flecha="up"
             flechaColor="text-success"
           />
+          {/* ventas , ingresos total, gastos totales, */}
           <Headers
-            titulo="Titulo"
+            titulo="Ingresos totales"
             dato="$100.000"
             icon="fas fa-dollar-sign"
             iconColor="text-danger"
@@ -44,19 +45,19 @@ const Dashboard = () => {
             flechaColor="text-danger"
           />
           <Headers
-            titulo="Titulo"
+            titulo="Gastos totales"
             dato="$100.000"
-            icon="fas fa-dollar-sign"
-            iconColor="text-danger"
+            icon="fas fa-coins fa-sm"
+            iconColor="text-info"
             subtitulo="subtitulo"
             flecha="up"
             flechaColor="text-success"
           />
           <Headers
-            titulo="Titulo"
+            titulo="Ganancias del mes"
             dato="$100.000"
-            icon="fas fa-dollar-sign"
-            iconColor="text-danger"
+            icon="fas fa-chart-line fa-sm"
+            iconColor="text-success"
             subtitulo="subtitulo"
             flecha="down"
             flechaColor="text-danger"

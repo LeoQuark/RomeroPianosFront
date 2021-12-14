@@ -2,11 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 
 const TablaMueblesCarrito = ({ muebles, agregarProductos, carrito }) => {
   const includes = (idProducto) => {
-    let isDisabled = carrito.productos.some(
-      (producto) => producto.id === idProducto
-    );
-    return isDisabled ? " disabled" : " ";
+    let isDisabled = idProducto === carrito.id ? "disabled" : " ";
+    return isDisabled;
   };
+
   return (
     <div>
       <table className="table table-sm table-hover overflow-scroll">
@@ -26,7 +25,7 @@ const TablaMueblesCarrito = ({ muebles, agregarProductos, carrito }) => {
                 <td>{mueble.nombre}</td>
                 <td>{mueble.categoria}</td>
                 <td>{mueble.origen}</td>
-                <td>{mueble.precio}</td>
+                <td>{mueble.costo_final}</td>
                 <td>
                   <button
                     className={

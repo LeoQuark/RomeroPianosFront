@@ -57,6 +57,7 @@ const Importaciones = () => {
                       <input
                         type="text"
                         className="form-control"
+                        placeholder="$$$"
                         name="dolar"
                       />
                     </div>
@@ -65,6 +66,7 @@ const Importaciones = () => {
                       <input
                         type="text"
                         className="form-control"
+                        placeholder="$$$"
                         name="valorProducto"
                       />
                     </div>
@@ -102,7 +104,7 @@ const Importaciones = () => {
                     className="d-flex justify-content-start"
                     style={{ fontSize: "40px" }}
                   >
-                    <div>{`$${122121}`}</div>
+                    <div>{`$${0}`}</div>
                   </div>
                   <div className="d-flex justify-content-start pt-4 pt-lg-0">
                     <button className="btn btn-sm btn-yellow">

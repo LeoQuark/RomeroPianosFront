@@ -5,12 +5,13 @@ import { getVentasLocalStorage } from "../../utils/Storage.js";
 //segundo paso para agregar una venta -- resumen del carrito
 function Paso2() {
   //useContext del carrito de ventas
-  const { carrito, eliminarProducto } = useContext(CarritoContext);
+  const { carrito, limpiarCarro } = useContext(CarritoContext);
 
   //funcion para eliminar un producto del carrito -- ocupando un reducer
   const clickEliminar = (event, producto) => {
     event.preventDefault();
-    eliminarProducto(producto);
+    console.log(producto);
+    limpiarCarro(producto);
   };
 
   useEffect(() => {
@@ -32,37 +33,28 @@ function Paso2() {
             <th scope="col">Eliminar</th>
           </thead>
           <tbody>
-            {carrito.productos ? (
-              carrito.productos.map(
-                (producto, key) =>
-                  key != 0 && (
-                    <tr>
-                      <td className="text-dark" scope="row">
-                        {key}
-                      </td>
-                      <td className="text-dark text-capitalize">
-                        {producto.nombre}
-                      </td>
-                      <td className="text-dark text-capitalize">
-                        {producto.tipo}
-                      </td>
-                      <td className="text-dark">{producto.precio}</td>
-                      <td className="text-dark text-capitalize">
-                        {producto.cantidad}
-                      </td>
-                      <td>
-                        <button
-                          className="btn btn-sm btn-secondary"
-                          onClick={(event) => clickEliminar(event, producto)}
-                        >
-                          Eliminar
-                        </button>
-                      </td>
-                    </tr>
-                  )
-              )
+            {carrito.id != "" ? (
+              <tr>
+                <td className="text-dark" scope="row">
+                  1
+                </td>
+                <td className="text-dark text-capitalize">{carrito.nombre}</td>
+                <td className="text-dark text-capitalize">{carrito.tipo}</td>
+                <td className="text-dark">{carrito.precio}</td>
+                <td className="text-dark text-capitalize">
+                  {carrito.cantidad}
+                </td>
+                <td>
+                  <button
+                    className="btn btn-sm btn-secondary"
+                    onClick={(event) => clickEliminar(event, carrito)}
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
             ) : (
-              <div>{"No hay productos"}</div>
+              <tr>No hay datos</tr>
             )}
           </tbody>
         </table>

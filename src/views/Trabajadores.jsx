@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-
-import axios from "axios";
-import { API_URL } from "../utils/api-data.js";
+import { obtenerTodos } from "../utils/peticiones.js";
 
 import AgregarTrabajador from "../components/Modals/Trabajadores/AgregarTrabajador.jsx";
 import TablaTrabajadores from "../components/Tablas/TablaTrabajadores.jsx";
@@ -16,15 +14,15 @@ const Trabajadores = () => {
 
   // console.log(trabajadores);
   const obtenerTrabajadores = async () => {
-    const res = await axios.get(`${API_URL}/trabajador/getAll`);
-    const data = res.data.data;
-    setTrabajadores(data);
-    setCargando(false);
+    const getTrabajador = await obtenerTodos("trabajador");
+    if (getTrabajador != "error") {
+      setTrabajadores(getTrabajador);
+    }
   };
 
   useEffect(() => {
     obtenerTrabajadores();
-  }, []);
+  }, [location]);
 
   return (
     <div className="container-fluid">

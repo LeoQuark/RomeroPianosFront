@@ -3,13 +3,38 @@ import ChartistGraph from "react-chartist";
 import { Card } from "react-bootstrap";
 
 const GraficoLinea = () => {
+  const fecha = new Date();
+  const mes = fecha.getMonth();
+  const meses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+
+  const mesActual = (mes) => {
+    for (let i = 0; i < meses.length; i++) {
+      if (i === mes) {
+        return meses[i];
+      }
+    }
+  };
+
   return (
     <Card>
       <Card.Header>
-        <Card.Title as="h4">Users Behavior</Card.Title>
-        <p className="card-category">24 Hours performance</p>
+        <Card.Title as="h4">Ganancias por mes</Card.Title>
+        <p className="card-category text-muted">{mesActual(mes)}</p>
       </Card.Header>
-      <Card.Body>
+      <Card.Body className="my-2">
         <div className="ct-chart" id="chartHours">
           <ChartistGraph
             data={{
@@ -68,11 +93,11 @@ const GraficoLinea = () => {
           Mueble <i className="fas fa-circle text-warning mx-1"></i>
           Productos en serie
         </div>
-        <hr></hr>
+        {/* <hr></hr>
         <div className="stats">
           <i className="fas fa-history"></i>
           Updated 3 minutes ago
-        </div>
+        </div> */}
       </Card.Footer>
     </Card>
   );

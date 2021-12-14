@@ -2,10 +2,8 @@ import React, { useState } from "react";
 
 const TablaPianosCarrito = ({ pianos, agregarProductos, carrito }) => {
   const includes = (idProducto) => {
-    let isDisabled = carrito.productos.some(
-      (producto) => producto.id === idProducto
-    );
-    return isDisabled ? " disabled" : " ";
+    let isDisabled = idProducto === carrito.id ? "disabled" : " ";
+    return isDisabled;
   };
 
   return (

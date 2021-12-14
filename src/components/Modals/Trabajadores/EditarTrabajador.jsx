@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import API_URL from "../../../utils/api-data.js";
+
+import { actualizarPorId } from "../../../utils/peticiones.js";
 
 const messageError = "Este campo es obligatorio";
 const schema = yup
@@ -34,9 +35,11 @@ function EditarTrabajador({ trabajador }) {
   const handleShow = () => setShow(true);
 
   const agregarDB = (data) => {
-    console.log("agregar a base de datos");
-    console.log(data);
-    // history.push("/admin/trabajador");
+    const put = actualizarPorId(data, "trabajador", trabajador.id_trabajador);
+    if (put != "error") {
+      handleClose();
+      history.push("/admin/trabajadores");
+    }
   };
 
   return (
