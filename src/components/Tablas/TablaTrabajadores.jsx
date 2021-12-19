@@ -91,7 +91,7 @@ function TablaTrabajadores({ trabajadores, cargando }) {
             filtrarDatos().map((trabajador, index) => (
               <tr>
                 <td className="text-dark" scope="row" key={index}>
-                  {index + 1}
+                  {numConsecutivos(index + 1)}
                 </td>
                 <td className="text-dark">{trabajador.nombre}</td>
                 <td className="text-dark">{trabajador.correo}</td>

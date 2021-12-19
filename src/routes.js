@@ -4,6 +4,7 @@ import RegistroVentas from "./views/RegistroVentas.jsx";
 import Inventario from "./views/Inventario.jsx";
 import Trabajadores from "./views/Trabajadores.jsx";
 import Importaciones from "./views/Importaciones.jsx";
+import RegistroGastos from "./views/RegistroGastos.jsx";
 
 const dashboardRoutes = [
   {
@@ -23,7 +24,7 @@ const dashboardRoutes = [
   {
     path: "/registro-ventas",
     name: "Registro de ventas",
-    icon: "fas fa-clipboard-list",
+    icon: "fas fa-shopping-basket",
     component: RegistroVentas,
     layout: "/admin",
   },
@@ -35,7 +36,7 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/Importaciones",
+    path: "/importaciones",
     name: "Importaciones",
     icon: "fas fa-calculator",
     component: Importaciones,
@@ -43,9 +44,9 @@ const dashboardRoutes = [
   },
   {
     path: "/registro-gastos",
-    name: "Importaciones",
-    icon: "fas fa-calculator",
-    component: Importaciones,
+    name: "Registro de gastos",
+    icon: "fas fa-clipboard-list",
+    component: RegistroGastos,
     layout: "/admin",
   },
 ];

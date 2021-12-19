@@ -18,7 +18,7 @@ function TablaVentas({ ventas, cargando }) {
     }
     //si hay un nombre para filtrar
     const productoFiltrado = ventas.filter((prod) => {
-      return prod.nombre.includes(filtro);
+      return prod.fecha.includes(filtro);
     });
     return productoFiltrado.slice(paginacion, paginacion + 5);
   };
@@ -35,7 +35,7 @@ function TablaVentas({ ventas, cargando }) {
   //funciones para la paginacion
   const siguiente = () => {
     if (
-      ventas.filter((prod) => prod.nombre.includes(filtro)).length >
+      ventas.filter((prod) => prod.fecha.includes(filtro)).length >
       paginacion + 5
     )
       setPaginacion(paginacion + 5);
@@ -66,10 +66,9 @@ function TablaVentas({ ventas, cargando }) {
           {btnFiltrar && (
             <div className="w-25 mx-2">
               <input
-                type="text"
+                type="date"
                 name="filtrar"
-                className="form-control"
-                placeholder="Filtrar por fecha"
+                className="form-control py-0 px-1"
                 value={filtro}
                 onChange={filtrarNombre}
               />
@@ -92,7 +91,7 @@ function TablaVentas({ ventas, cargando }) {
             filtrarDatos().map((venta, index) => (
               <tr>
                 <td className="text-dark" scope="row" key={index}>
-                  {index + 1}
+                  {numConsecutivos(index + 1)}
                 </td>
                 <td className="text-dark">{venta.precio_total}</td>
                 <td className="text-dark">{formatearFecha(venta.fecha)}</td>

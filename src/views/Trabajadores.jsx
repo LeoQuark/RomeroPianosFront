@@ -30,10 +30,10 @@ const Trabajadores = () => {
         <Card.Header>
           <div className="row d-flex justify-content-between">
             <div className="col-12 col-sm-8 col-lg-6">
-              <Card.Title as="h4">Registro de trabajador</Card.Title>
+              <Card.Title as="h4">Registro de Trabajadores</Card.Title>
               <p className="card-category">
-                Aquí puedes agregar un nuevo producto, ver la información,
-                editar y eliminar tus productos de tu inventario.
+                Aquí puedes agregar información de los trabajadores y ver sus
+                montos de comisión.
               </p>
             </div>
             <div className="col-12 col-sm-3 col-lg-2">

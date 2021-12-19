@@ -1,154 +1,121 @@
-import React, { useState, useEffect } from "react";
-import { Card, Table } from "react-bootstrap";
-import AgregarVenta from "../components/Modals/Ventas/AgregarVenta.jsx";
+import React, { useState, useEffect, useContext } from "react";
+import { Card } from "react-bootstrap";
+import UsuarioContext from "../context/Usuario/UsuarioContext.js";
+import { useHistory, useLocation } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+import { agregarProducto, obtenerTodos } from "../utils/peticiones.js";
+
+import TablaGastos from "../components/Tablas/TablaGastos.jsx";
+
+//funciones (yup package) para validar los datos del formulario
+const messageError = "Este campo es obligatorio";
+const schema = yup
+  .object({
+    monto: yup.number().typeError(messageError).required(messageError),
+    descripcion: yup.string().min(2).required(messageError),
+  })
+  .required();
 
 const RegistroGastos = () => {
-  const [btnFiltrar, setBtnFiltrar] = useState(false);
-  const [filtro, setFiltro] = useState("");
-  const [paginacion, setPaginacion] = useState(0);
-  // console.log(pianos);
-  //funcion para filtrar los datos por la paginacion y el filtro por el nombre
-  // const filtrarDatos = () => {
-  //   if (filtro.length === 0) {
-  //     return pianos.slice(paginacion, paginacion + 5);
-  //   }
-  //   //si hay un nombre para filtrar
-  //   const productoFiltrado = pianos.filter((prod) => {
-  //     return prod.nombre.includes(filtro);
-  //   });
-  //   return productoFiltrado.slice(paginacion, paginacion + 5);
-  // };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  //funcion para abrir el apartado para ingresar el filtro (input)
-  const abrirInputFiltro = () => {
-    if (btnFiltrar == false) setBtnFiltrar(!btnFiltrar);
-    else {
-      setFiltro("");
-      setBtnFiltrar(!btnFiltrar);
+  const { usuario } = useContext(UsuarioContext);
+  const [cargando, setCargando] = useState(true);
+  const history = useHistory();
+  const location = useLocation();
+  const [gastos, setGastos] = useState();
+  const [datosGastos, setDatosGastos] = useState({});
+
+  const handleInput = (event) => {
+    event.preventDefault();
+    setDatosGastos({ ...datosGastos, [event.target.name]: event.target.value });
+  };
+
+  const agregarDB = async () => {
+    setDatosGastos({
+      ...datosGastos,
+      ["idUsuario"]: usuario.id_usuario,
+    });
+    const post = await agregarProducto(datosGastos, "gasto");
+    if (post != "error") {
+      history.push("/admin/registro-gastos");
     }
   };
 
-  //funciones para la paginacion
-  // const siguiente = () => {
-  //   if (
-  //     pianos.filter((prod) => prod.nombre.includes(filtro)).length >
-  //     paginacion + 5
-  //   )
-  //     setPaginacion(paginacion + 5);
-  // };
-
-  const atras = () => {
-    if (paginacion > 0) setPaginacion(paginacion - 5);
-  };
-
-  const filtrarNombre = (event) => {
-    setPaginacion(0);
-    setFiltro(event.target.value);
-  };
-
-  //funcion para enumerar correctamente las filas de la tabla
-  const numConsecutivos = (num) => {
-    if (paginacion === 0) return num;
-    else return paginacion + num;
-  };
+  useEffect(async () => {
+    const get = await obtenerTodos("gasto");
+    setGastos(get);
+  }, [location]);
 
   return (
     <div className="container-fluid">
-      <Card className="strpied-tabled-with-hover">
-        <Card.Header>
-          <div className="row d-flex justify-content-between">
-            <div className="col-12 col-sm-8 col-lg-6">
-              <Card.Title as="h4">Registro de Ventas</Card.Title>
-              <p className="card-category">
-                Aquí puedes agregar un nuevo producto, ver la información,
-                editar y eliminar tus productos de tu inventario.
-              </p>
-            </div>
-            <div className="col-12 col-sm-3 col-lg-2">
-              <AgregarVenta />
-            </div>
-          </div>
-        </Card.Header>
-        <Card.Body className="table-full-width table-responsive px-0">
-          <div className="container-fluid px-3 py-2">
-            <div className="d-flex justify-content-start">
-              <button
-                className="btn btn-sm btn-dark"
-                onClick={abrirInputFiltro}
-              >
-                Filtrar
-              </button>
-              {btnFiltrar && (
-                <div className="w-25 mx-2">
-                  <input
-                    type="text"
-                    name="filtrar"
-                    className="form-control"
-                    placeholder="Filtrar por nombre"
-                    value={filtro}
-                    onChange={filtrarNombre}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-          {/* <Table className="table-hover">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Precio</th>
-              <th scope="col">Tipo</th>
-              <th scope="col">Marca</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Fecha Ingreso</th>
-              <th scope="col">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pianos ? (
-              filtrarDatos().map((piano, key) => (
-                <tr>
-                  <td className="text-dark">{numConsecutivos(key + 1)}</td>
-                  <td className="text-dark">{piano.nombre}</td>
-                  <td className="text-dark">{piano.precio}</td>
-                  <td className="text-dark">{piano.tipo}</td>
-                  <td className="text-dark">{piano.marca}</td>
-                  <td className="text-dark">{piano.estado_piano}</td>
-                  <td className="text-dark">{formatearFecha(piano.fecha)}</td>
-                  <td className="text-dark">
-                    <div className="d-flex justify-content-start justify-content-lg-between">
-                      <EditarPiano piano={piano} />
-                      <EliminarProducto
-                        producto={piano}
-                        tipo="piano"
-                        nombre={piano.nombre}
-                      />
-                      <InfoProducto producto={piano} tipo="piano" />
-                    </div>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <div>{cargando ? <Cargando /> : "No hay productos"}</div>
-            )}
-          </tbody>
-        </Table> */}
-          <div className="container-fluid">
-            <div className="d-flex justify-content-center w-100">
-              <button className="btn btn-sm btn-dark mx-2" onClick={atras}>
-                Anterior
-              </button>
-              <button
-                className="btn btn-sm btn-dark mx-2"
-                // onClick={siguiente}
-              >
-                Siguiente
-              </button>
-            </div>
-          </div>
-        </Card.Body>
-      </Card>
+      <div className="row">
+        <div className="col-12 col-sm-4 col-lg-4 gy-2">
+          <Card className="strpied-tabled-with-hover px-2">
+            <Card.Header>
+              <Card.Title as="h4">Registro de Gastos</Card.Title>
+              <div className="row">
+                <p className="card-category text-muted">
+                  Agrega y visualiza tu registro de gastos.
+                </p>
+              </div>
+              <hr className="mt-4" />
+            </Card.Header>
+            <Card.Body className="table-full-width table-responsive px-0">
+              <div className="row">
+                <form onSubmit={handleSubmit(agregarDB)}>
+                  <div className="mb-2">
+                    <label className="text-sm">Monto</label>
+                    <input
+                      type="number"
+                      name="monto"
+                      className="form-control"
+                      defaultValue={"$$$"}
+                      {...register("monto")}
+                      onChange={handleInput}
+                    />
+                    <span className="text-danger text-xs">
+                      {errors.monto?.message}
+                    </span>
+                  </div>
+                  <div className="mb-2">
+                    <label className="text-sm">Descripción</label>
+                    <textarea
+                      type="text"
+                      name="descripcion"
+                      rows="3"
+                      className="form-control h-100"
+                      placeholder="Descripcion"
+                      {...register("descripcion")}
+                      onChange={handleInput}
+                    ></textarea>
+                    <span className="text-danger text-xs">
+                      {errors.descripcion?.message}
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-center mt-3">
+                    <button type="submit" className="btn btn-yellow">
+                      Ingresar gasto
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+        <div className="col-12 col-sm-8 col-lg-8 gy-2">
+          <TablaGastos gastos={gastos} cargando={cargando} />
+        </div>
+      </div>
     </div>
   );
 };
