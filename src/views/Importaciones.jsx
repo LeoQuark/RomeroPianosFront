@@ -94,7 +94,7 @@ const Importaciones = () => {
                         type="number"
                         name="precioProducto"
                         className="form-control"
-                        placeholder="$$$"
+                        placeholder="En dolares"
                         {...register("precioProducto")}
                         onChange={handleInput}
                       />

@@ -66,7 +66,6 @@ function Admin() {
           <div className="content-fluid">
             <Switch>{getRoutes(routes)}</Switch>
           </div>
-          <Footer />
         </div>
       </div>
     </CarritoState>

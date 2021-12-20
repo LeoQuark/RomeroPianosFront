@@ -11,13 +11,15 @@ const Tabla = (props) => {
       <table className="table table-sm table-striped">
         <tbody>
           {props.datos ? (
-            Object.keys(props.datos).map((dato) => (
-              <tr>
-                {/* {console.log(infoVenta.cliente[`${dato}`])} */}
-                <td className="text-sm">{dato}</td>
-                <td className="text-sm">{props.datos[`${dato}`]}</td>
-              </tr>
-            ))
+            Object.keys(props.datos).map(
+              (dato) =>
+                dato != "id_cliente" && (
+                  <tr>
+                    <td className="text-sm">{dato}</td>
+                    <td className="text-sm">{props.datos[`${dato}`]}</td>
+                  </tr>
+                )
+            )
           ) : (
             <Cargando />
           )}
@@ -41,13 +43,13 @@ function InfoVentas({ venta }) {
   };
 
   const mostrarProduto = (infoVenta) => {
-    let arregloAux = [infoVenta.piano, infoVenta.mueble, infoVenta.prod_serie];
-    console.log(infoVenta);
-    for (let producto in arregloAux) {
-      // console.log(producto && producto);
-      return producto && producto;
-    }
+    let arregloProd = [infoVenta.piano, infoVenta.mueble, infoVenta.prod_serie];
+    // console.log(arregloProd);
+    const producto = arregloProd.map((producto) => producto && producto);
+    // console.log(producto);
   };
+
+  console.log(infoVenta);
 
   return (
     <>
@@ -57,7 +59,6 @@ function InfoVentas({ venta }) {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton className="py-0">
-          {/* <Modal.Title></Modal.Title> */}
           <div className="row d-flex mt-3">
             <h3>Información de la venta</h3>
             <p className="text-muted text-sm">ID: {venta.id_venta}</p>
@@ -68,9 +69,25 @@ function InfoVentas({ venta }) {
             {infoVenta && (
               <div>
                 <Tabla datos={infoVenta.cliente} tipo={"cliente"} />
+                <Tabla
+                  datos={
+                    infoVenta.mueble
+                      ? infoVenta.mueble
+                      : infoVenta.piano
+                      ? infoVenta.piano
+                      : infoVenta.prod_serie && infoVenta.prod_serie
+                  }
+                  tipo={
+                    infoVenta.mueble
+                      ? "mueble"
+                      : infoVenta.piano
+                      ? "piano"
+                      : infoVenta.prod_serie && "producto en serie"
+                  }
+                />
               </div>
             )}
-            {/* {infoVenta && mostrarProduto(infoVenta)} */}
+            {mostrarProduto(infoVenta)}
           </div>
         </Modal.Body>
         <Modal.Footer>

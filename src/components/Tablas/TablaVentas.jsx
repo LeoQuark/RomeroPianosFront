@@ -100,19 +100,6 @@ function TablaVentas({ ventas, cargando }) {
                     <div className="mx-1">
                       <InfoVentas venta={venta} />
                     </div>
-                    {/* <div className="mx-1">
-                      <EditarTrabajador trabajador={trabajador} className="" />
-                    </div>
-                    <div className="mx-1">
-                      <EliminarProducto
-                        producto={venta}
-                        tipo="venta"
-                        nombre={venta.nombre}
-                      />
-                    </div> */}
-                    <div className="mx-1">
-                      {/* <InfoProducto producto={trabajador} tipo="trabajador" /> */}
-                    </div>
                   </div>
                 </td>
               </tr>

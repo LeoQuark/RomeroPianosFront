@@ -1,4 +1,5 @@
 export const formatearFecha = (fecha) => {
+  console.log("fecha", fecha);
   const quitarMilisegundos = fecha.slice(0, 19);
   const horaFecha = quitarMilisegundos.split("T");
 
