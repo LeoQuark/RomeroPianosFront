@@ -6,7 +6,6 @@ import InfoVentas from "../Modals/Ventas/InfoVentas.jsx";
 import Cargando from "../Cargando.jsx";
 
 function TablaVentas({ ventas, cargando }) {
-  const location = useLocation();
   const [btnFiltrar, setBtnFiltrar] = useState(false);
   const [filtro, setFiltro] = useState("");
   const [paginacion, setPaginacion] = useState(0);
@@ -54,8 +53,6 @@ function TablaVentas({ ventas, cargando }) {
     if (paginacion === 0) return num;
     else return paginacion + num;
   };
-
-  useEffect(() => {}, [location]);
 
   // console.log(ventas);
   return (
