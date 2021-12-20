@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Card, Table } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 import AgregarVenta from "../components/Modals/Ventas/AgregarVenta.jsx";
 import TablaVentas from "../components/Tablas/TablaVentas.jsx";
 import { obtenerTodos } from "../utils/peticiones.js";
 
 const RegistroVentas = () => {
+  const location = useLocation();
   const [cargando, setCargando] = useState(true);
   const [ventas, setVentas] = useState();
 
@@ -13,7 +15,7 @@ const RegistroVentas = () => {
     if (get != "error") {
       setVentas(get);
     }
-  }, []);
+  }, [location]);
 
   return (
     <div className="container-fluid">

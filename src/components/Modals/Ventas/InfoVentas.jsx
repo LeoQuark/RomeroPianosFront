@@ -1,22 +1,53 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
-import { obtenerInfoPorId } from "../../../utils/peticiones.js";
-
+import { obtenerInfoVentaPorId } from "../../../utils/peticiones.js";
+import Cargando from "../../Cargando.jsx";
 import { formatearFecha } from "../../../utils/formatear.js";
 
-function InfoVentas({ id_venta, id_cliente }) {
-  const [infoVenta, setInfoVenta] = useState();
+const Tabla = (props) => {
+  return (
+    <div className="my-2">
+      <div className="text-capitalize bg-dark text-white px-2 rounded-top">{`Datos ${props.tipo}`}</div>
+      <table className="table table-sm table-striped">
+        <tbody>
+          {props.datos ? (
+            Object.keys(props.datos).map((dato) => (
+              <tr>
+                {/* {console.log(infoVenta.cliente[`${dato}`])} */}
+                <td className="text-sm">{dato}</td>
+                <td className="text-sm">{props.datos[`${dato}`]}</td>
+              </tr>
+            ))
+          ) : (
+            <Cargando />
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+function InfoVentas({ venta }) {
+  const [infoVenta, setInfoVenta] = useState({});
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = async () => {
+    setShow(true);
+    const get = await obtenerInfoVentaPorId(venta.id_venta, venta.id_cliente);
+    if (get != "error") {
+      setInfoVenta(get);
+    }
+  };
 
-  useEffect(async () => {
-    // const get = await obtenerInfoPorId(id_venta, id_cliente);
-    // if (get != "error") {
-    //   setInfoVenta(get);
-    // }
-  }, []);
+  const mostrarProduto = (infoVenta) => {
+    let arregloAux = [infoVenta.piano, infoVenta.mueble, infoVenta.prod_serie];
+    console.log(infoVenta);
+    for (let producto in arregloAux) {
+      // console.log(producto && producto);
+      return producto && producto;
+    }
+  };
 
   return (
     <>
@@ -29,14 +60,17 @@ function InfoVentas({ id_venta, id_cliente }) {
           {/* <Modal.Title></Modal.Title> */}
           <div className="row d-flex mt-3">
             <h3>Información de la venta</h3>
-            <p className="text-muted text-sm">ID: {`${id_venta}`}</p>
+            <p className="text-muted text-sm">ID: {venta.id_venta}</p>
           </div>
         </Modal.Header>
         <Modal.Body className="py-0 mx-0">
           <div>
-            <table className="table table-sm table-striped">
-              <tbody></tbody>
-            </table>
+            {infoVenta && (
+              <div>
+                <Tabla datos={infoVenta.cliente} tipo={"cliente"} />
+              </div>
+            )}
+            {/* {infoVenta && mostrarProduto(infoVenta)} */}
           </div>
         </Modal.Body>
         <Modal.Footer>

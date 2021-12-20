@@ -27,9 +27,9 @@ export const eliminarPorId = async (producto, id) => {
   return eliminar.data.msg;
 };
 
-export const obtenerInfoPorId = async (id_venta, id_cliente) => {
-  const get = await axios.get(`${API_URL}/venta/${id_venta}/${id_cliente}`);
-  if (eliminar.status != 200) return "error";
+export const obtenerInfoVentaPorId = async (id_venta, id_cliente) => {
+  const get = await axios.get(`${API_URL}/venta/get/${id_venta}/${id_cliente}`);
+  if (get.status != 200) return "error";
   return get.data.data;
 };
 

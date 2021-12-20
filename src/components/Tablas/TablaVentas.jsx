@@ -3,11 +3,10 @@ import { Table } from "react-bootstrap";
 
 import { formatearFecha } from "../../utils/formatear.js";
 import InfoVentas from "../Modals/Ventas/InfoVentas.jsx";
-// import EditarTrabajador from "../Modals/Trabajadores/EditarTrabajador.jsx";
-// import EliminarProducto from "../Modals/EliminarProducto.jsx";
 import Cargando from "../Cargando.jsx";
 
 function TablaVentas({ ventas, cargando }) {
+  const location = useLocation();
   const [btnFiltrar, setBtnFiltrar] = useState(false);
   const [filtro, setFiltro] = useState("");
   const [paginacion, setPaginacion] = useState(0);
@@ -56,6 +55,9 @@ function TablaVentas({ ventas, cargando }) {
     else return paginacion + num;
   };
 
+  useEffect(() => {}, [location]);
+
+  // console.log(ventas);
   return (
     <div>
       <div className="container-fluid px-3 py-2">
@@ -99,7 +101,7 @@ function TablaVentas({ ventas, cargando }) {
                 <td className="text-dark">
                   <div className="d-flex justify-content-start">
                     <div className="mx-1">
-                      <InfoVentas />
+                      <InfoVentas venta={venta} />
                     </div>
                     {/* <div className="mx-1">
                       <EditarTrabajador trabajador={trabajador} className="" />
