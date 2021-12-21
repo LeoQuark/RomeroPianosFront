@@ -31,7 +31,8 @@ function InfoProducto({ producto, tipo, nombre }) {
               <tbody>
                 {Object.keys(producto).map(
                   (dato, key) =>
-                    dato != `id_${tipo}` && (
+                    dato != `id_${tipo}` &&
+                    dato != "id_venta" && (
                       <tr>
                         {/* primera columna para mostrar los atributos de la tabla */}
                         <td>{dato}</td>
@@ -40,8 +41,6 @@ function InfoProducto({ producto, tipo, nombre }) {
                         dato === "fecha_registro" ||
                         dato === "fecha_modificacion" ? (
                           <td>{formatearFecha(producto[`${dato}`])}</td>
-                        ) : dato === "id_venta" ? (
-                          <td>{"No se que hacer aqui"}</td>
                         ) : (
                           <td>{producto[`${dato}`]}</td>
                         )}

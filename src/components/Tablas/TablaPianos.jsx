@@ -111,8 +111,7 @@ function TablaPianos({ pianos, cargando }) {
           <tbody>
             {pianos ? (
               filtrarDatos().map((piano, key) => (
-                <tr>
-                  {console.log(piano.fecha)}
+                <tr key={key}>
                   <td className="text-dark">{numConsecutivos(key + 1)}</td>
                   <td className="text-dark">{piano.nombre}</td>
                   <td className="text-dark">{piano.precio}</td>

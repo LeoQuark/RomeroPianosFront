@@ -44,12 +44,8 @@ function InfoVentas({ venta }) {
 
   const mostrarProduto = (infoVenta) => {
     let arregloProd = [infoVenta.piano, infoVenta.mueble, infoVenta.prod_serie];
-    // console.log(arregloProd);
     const producto = arregloProd.map((producto) => producto && producto);
-    // console.log(producto);
   };
-
-  console.log(infoVenta);
 
   return (
     <>
